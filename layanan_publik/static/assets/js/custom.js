@@ -648,5 +648,132 @@ $(document).ready(() => {
         }
 
         $("#content-form-surat").html(content)
+    });
+
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+          var cookies = document.cookie.split(";");
+          for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            if (cookie.substring(0, name.length + 1) === name + "=") {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+
+    var csrftoken = getCookie("csrftoken");
+
+    function csrfSafeMethod(method) {
+        return /^(GET|HEAD|OPTIONS|TRACE)$/.test(method);
+      }
+
+
+    $("#acc_surat").click(() => {
+        const data = $("#acc_surat").attr("data");
+        const role = $("#acc_surat").attr("role");
+        Swal.fire({
+            title: 'Apakah yakin?',
+            text: "Data pengajuan surat akan disetujui.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Iya'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                console.log(data);
+                $.ajaxSetup({
+                    beforeSend: function (xhr, settings) {
+                      if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                      }
+                    },
+                  });
+
+                $.ajax({
+                    url: 'http://localhost:8000/api/acc_surat',
+                    method: "POST",
+                    data: {
+                        id_laporan: data,
+                        status: role,
+                    },
+                    success: (response) => {
+                        if (response.status === true){
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                confirmButtonText: 'Oke',
+                                allowOutsideClick: false,
+                              }).then((result) => {
+                                if (result.isConfirmed) {
+                                    if (role === 'petugas') {
+                                        document.location.href = '/petugas/dashboard'
+                                    } else {
+                                        document.location.href = '/kepala/dashboard'
+                                    }
+                                }
+                              });
+                        }
+                    }
+                })
+            }
+          })
     })
-})
+
+    $("#tolak_surat").click(() => {
+        const data = $("#tolak_surat").attr("data");
+        const role = $("#acc_surat").attr("role");
+        Swal.fire({
+            title: 'Apakah yakin?',
+            text: "Data pengajuan surat akan ditolak.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Iya'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                console.log(data);
+                $.ajaxSetup({
+                    beforeSend: function (xhr, settings) {
+                      if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                      }
+                    },
+                  });
+
+                $.ajax({
+                    url: 'http://localhost:8000/api/tolak_surat',
+                    method: "POST",
+                    data: {
+                        id_laporan: data,
+                        status: role,
+                    },
+                    success: (response) => {
+                        if (response.status === true){
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                confirmButtonText: 'Oke',
+                                allowOutsideClick: false,
+                              }).then((result) => {
+                                if (result.isConfirmed) {
+                                    if (role === 'petugas') {
+                                        document.location.href = '/petugas/dashboard'
+                                    } else {
+                                        document.location.href = '/kepala/dashboard'
+                                    }
+                                }
+                              });
+                        }
+                    }
+                })
+            }
+          })
+    })
+
+});

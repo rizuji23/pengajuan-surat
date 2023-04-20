@@ -13,6 +13,7 @@ class User(AbstractUser):
     ROLE_CHOICES = (
         (PENDUDUK, 'Penduduk'),
         (PETUGAS_DESA, 'Petugas Desa'),
+        (KEPALA_DESA, 'Kepala Desa'),
         (ADMIN, 'Admin')
     )
 
@@ -22,16 +23,24 @@ class User(AbstractUser):
     alamat = models.TextField(null=True)
     jenis_kelamin = models.CharField(null=True, max_length=50)
     no_hp = models.BigIntegerField(null=True)
+    ttl = models.CharField(max_length=100, null=True)
+    agama = models.CharField(max_length=100, null=True)
+    status = models.CharField(max_length=100, null=True)
+    pekerjaan = models.CharField(max_length=100, null=True)
+    kewarganegaraan = models.CharField(max_length=100, null=True)
 
 
 class Laporan(models.Model):
     ACTIVE_CHOICES = (
         (0, 'not_active'),
-        (1, 'active')
+        (1, 'active'),
+        (2, 'progress_kepala_desa'),
+        (3, 'ditolak')
     )
 
     id = models.AutoField(primary_key=True)
     id_laporan = models.CharField(max_length=100)
+    kode_surat = models.CharField(max_length=100, null=True)
     jenis_surat = models.CharField(max_length=100)
     id_user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     is_active = models.PositiveSmallIntegerField(

@@ -1,0 +1,78 @@
+{% extends 'surat.html' %}
+{% load static %}
+
+{% block surat_content %}
+    <div class="isi-surat">
+        <p>&emsp;Yang bertanda tangan di bawah ini Kepala Desa Kabupaten Bandung Cileunyi, dengan ini menerangkan bahwa:</p>
+        <div class="d-flex">
+            <div>
+                <ul>
+                    <li>NIK</li>
+                    <li>Nama</li>
+                    <li>Jenis Kelamin</li>
+                    <li>Tempat/Tgl. Lahir</li>
+                    <li>Agama</li>
+                    <li>Status</li>
+                    <li>Pekerjaan</li>
+                    <li>Kewarganegaraan</li>
+                    <li>Alamat</li>
+                </ul>
+            </div>
+            <div>
+                <ul>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                </ul>
+            </div>
+
+            <div>
+                <ul>
+                    <li>{{ user.nik }}</li>
+                    <li>{{ user.first_name }} {{ user.last_name }}</li>
+                    <li>{{ user.jenis_kelamin }}</li>
+                    <li>{{ user.ttl }}</li>
+                    <li>{{ user.agama }}</li>
+                    <li>{{ user.status }}</li>
+                    <li>{{ user.pekerjaan }}</li>
+                    <li>{{ user.kewarganegaraan }}</li>
+                    <li>{{ user.alamat }}</li>
+                </ul>
+            </div>
+        </div>
+        <p>Adalah Penduduk Asli Kecamatan Cileunyi Kabupaten Bandung dan sepanjang pengetahuan kami, serta catatan pada kami bahwa yang bersangkutan memang benar <b><i>Telah Menikah</i></b> dengan:</p>
+        <div class="d-flex">
+            <div>
+                <ul>
+                    <li>Nama Mempelai Pria</li>
+                    <li>Nama Mempelai Wanita</li>
+                    <li>Nama Wali</li>
+                </ul>
+            </div>
+            <div>
+                <ul>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                </ul>
+            </div>
+
+            <div>
+                <ul>
+                    <li>{{ data.mempelai_pria }}</li>
+                    <li>{{ data.mempelai_wanita }}</li>
+                    <li>{{ data.nama_wali }}</li>
+                </ul>
+            </div>
+        </div>
+        <p>Demikianlah Surat Keterangan ini kami buat dengan sebenernya untuk dipergunakan sebagaimana mestinya.</p>
+    </div>
+
+    {% include '../include/surat/ttd.html' %}
+{% endblock %}

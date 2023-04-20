@@ -1,0 +1,101 @@
+{% extends 'surat.html' %}
+{% load static %}
+
+{% block surat_content %}
+    <div class="isi-surat">
+        <p>&emsp;Yang bertanda tangan di bawah ini Kepala Desa Kabupaten Bandung Cileunyi, dengan ini menerangkan bahwa:</p>
+        <div class="d-flex">
+            <div>
+                <ul>
+                    <li>NIK</li>
+                    <li>Nama</li>
+                    <li>Jenis Kelamin</li>
+                    <li>Tempat/Tgl. Lahir</li>
+                    <li>Agama</li>
+                    <li>Status</li>
+                    <li>Pekerjaan</li>
+                    <li>Kewarganegaraan</li>
+                    <li>Alamat</li>
+                </ul>
+            </div>
+            <div>
+                <ul>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                </ul>
+            </div>
+
+            <div>
+                <ul>
+                    <li>{{ user.nik }}</li>
+                    <li>{{ user.first_name }} {{ user.last_name }}</li>
+                    <li>{{ user.jenis_kelamin }}</li>
+                    <li>{{ user.ttl }}</li>
+                    <li>{{ user.agama }}</li>
+                    <li>{{ user.status }}</li>
+                    <li>{{ user.pekerjaan }}</li>
+                    <li>{{ user.kewarganegaraan }}</li>
+                    <li>{{ user.alamat }}</li>
+                </ul>
+            </div>
+        </div>
+        <p>Telah meninggal dunia pada:</p>
+        <div class="d-flex">
+            <div>
+                <ul>
+                    <li>Nama</li>
+                    <li>Tanggal</li>
+                    <li>Sebab Kematian</li>
+                </ul>
+            </div>
+            <div>
+                <ul>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                </ul>
+            </div>
+
+            <div>
+                <ul>
+                    <li>{{ data.nama_wafat }}</li>
+                    <li>{{ data.hari_tanggal_wafat }}</li>
+                    <li>{{ data.penyebab }}</li>
+                </ul>
+            </div>
+        </div>
+
+        <p>Berdasarkan surat pernyataan dari:</p>
+        <div class="d-flex">
+            <div>
+                <ul>
+                    <li>Nama</li>
+                    <li>Hubungan</li>
+                </ul>
+            </div>
+            <div>
+                <ul>
+                    <li>:</li>
+                    <li>:</li>
+                </ul>
+            </div>
+
+            <div>
+                <ul>
+                    <li>{{ data.pelapor }}</li>
+                    <li>{{ data.hubungan_pelapor }}</li>
+                </ul>
+            </div>
+        </div>
+        <p>Demikianlah Surat Keterangan ini kami buat dengan sebenernya untuk dipergunakan sebagaimana mestinya.</p>
+    </div>
+
+    {% include '../include/surat/ttd.html' %}
+{% endblock %}

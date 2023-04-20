@@ -4,7 +4,13 @@
 {% block pagecontent %}
 <div id="layout-wrapper">
     {% include 'include/navbar.html' %}
+    {% if data.role == 1 %}
     {% include 'include/sidebar_penduduk.html' %}
+    {% elif data.role == 2 %}
+    {% include 'include/sidebar_petugas.html' %}
+    {% elif data.role == 3 %}
+    {% include 'include/sidebar_kepala.html' %}
+    {% endif %}
 
     <div class="main-content">
         <div class="page-content">
@@ -14,11 +20,10 @@
                     <div class="col-12">
                         <div class="d-flex">
                             <div class="mr-3">
-                                <a href="{% url 'dashboard_penduduk_view' %}" class="btn btn-primary btn-sm">< Kembali</a>
+                                <a href="{% if data.role == 1 %} {% url 'dashboard_penduduk_view' %} {% elif data.role == 2 %} {% url 'dashboard_petugas_view' %} {% elif data.role == 3 %} {% url 'dashboard_kepala' %} {% endif %}" class="btn btn-primary btn-sm">< Kembali</a>
                             </div>
                             <div class="align-self-center">
-                                <h4 class="mb-0 font-size-18">Detail Pengajuan</h4>
-
+                                <h4 class="mb-0 font-size-18">Detail Pengajuan Surat</h4>
                             </div>
                         </div>
                     </div>
@@ -27,8 +32,31 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="form-detail">
+                            <h4 class="header-title">Informasi User</h4>
                             {{ form }}
+                            <h4 class="header-title mt-4">Informasi Surat Pengajuan</h4>
+                            {{detail_form}}
                         </div>
+
+                        {% if data.role == 2 or data.role == 3 %}
+                            <hr>
+                            {% if data_laporan.is_active == 1 and data.role == 2 %}
+                            <div class="text-right">
+                                <button class="btn btn-danger mr-3" id="tolak_surat" data="{{ data_laporan.id_laporan }}" role="{% if data.role == 2 %}petugas{% elif data.role == 3 %}kepala{% endif %}">Tolak</button>
+                                <button class="btn btn-primary" id="acc_surat" data="{{ data_laporan.id_laporan }}" role="{% if data.role == 2 %}petugas{% elif data.role == 3 %}kepala{% endif %}">Acc</button>
+                            </div>
+                            {% elif data_laporan.is_active == 2 and data.role == 3 %}
+                            <div class="text-right">
+                                <button class="btn btn-danger mr-3" id="tolak_surat" data="{{ data_laporan.id_laporan }}" role="{% if data.role == 2 %}petugas{% elif data.role == 3 %}kepala{% endif %}">Tolak</button>
+                                <button class="btn btn-primary" id="acc_surat" data="{{ data_laporan.id_laporan }}" role="{% if data.role == 2 %}petugas{% elif data.role == 3 %}kepala{% endif %}">Acc</button>
+                            </div>
+                            {% elif data_laporan.is_active is 3 %}
+                            <div class="text-right">
+                                <button class="btn btn-danger mr-3" disabled>Tolak</button>
+                                <button class="btn btn-primary" disabled>Acc</button>
+                            </div>
+                            {% endif %}
+                        {% endif %}
                     </div>
                 </div>
             </div>

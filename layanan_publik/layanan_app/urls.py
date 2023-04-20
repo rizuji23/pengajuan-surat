@@ -33,6 +33,40 @@ urlpatterns = [
     path('save_surat_kematian', views.save_surat_kematian,
          name="save_surat_kematian"),
 
-    path('penduduk/detail_pengajuan/<str:id>', views.detail_pengajuan,
+    path('detail_pengajuan/<str:id>', views.detail_pengajuan,
          name="detail_pengajuan"),
+
+    path('petugas/dashboard', views.dashboard_petugas,
+         name="dashboard_petugas_view"),
+
+    path('api/acc_surat', views.acc_surat, name="acc_surat"),
+    path('api/tolak_surat', views.tolak_surat, name="tolak_surat"),
+
+    path('list_done', views.list_surat_selesai,
+         name="list_done"),
+
+    path('kepala/dashboard', views.dashboard_kepala, name="dashboard_kepala"),
+
+    path('download/surat', views.surat, name="surat"),
+    path('download/surat/nikah/<str:id>',
+         views.nikah_surat, name="nikah_surat"),
+    path('download/surat/surat_kematian/<str:id>',
+         views.surat_kematian, name="surat_kematian"),
+    path('download/surat/surat_pindah/<str:id>',
+         views.surat_pindah, name="surat_pindah"),
+    path('download/surat/surat_kelahiran/<str:id>',
+         views.surat_kelahiran, name="surat_kelahiran"),
+    path('download/surat/skck/<str:id>',
+         views.skck, name="skck"),
+    path('download/surat/sku/<str:id>',
+         views.sku, name="sku"),
+    path('download/surat/sktm_kes/<str:id>',
+         views.sktm_kes, name="sktm_kes"),
+    path('download/surat/sktm_pend/<str:id>',
+         views.sktm_pend, name="sktm_pend"),
+    path('download/surat/domisili/<str:id>',
+         views.domisili, name="domisili"),
+    path('download/surat/beda_nama/<str:id>',
+         views.beda_nama, name="beda_nama"),
+
 ]

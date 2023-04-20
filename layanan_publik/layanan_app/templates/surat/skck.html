@@ -1,0 +1,54 @@
+{% extends 'surat.html' %}
+{% load static %}
+
+{% block surat_content %}
+    <div class="isi-surat">
+        <p>&emsp;Yang bertanda tangan di bawah ini Kepala Desa Kabupaten Bandung Cileunyi, dengan ini menerangkan bahwa:</p>
+        <div class="d-flex">
+            <div>
+                <ul>
+                    <li>NIK</li>
+                    <li>Nama</li>
+                    <li>Jenis Kelamin</li>
+                    <li>Tempat/Tgl. Lahir</li>
+                    <li>Pekerjaan</li>
+                    <li>Agama</li>
+                    <li>Kewarganegaraan</li>
+                    <li>Alamat</li>
+                    <li>Keterangan</li>
+                </ul>
+            </div>
+            <div>
+                <ul>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                </ul>
+            </div>
+
+            <div>
+                <ul>
+                    <li>{{ user.nik }}</li>
+                    <li>{{ user.first_name }} {{ user.last_name }}</li>
+                    <li>{{ user.jenis_kelamin }}</li>
+                    <li>{{ user.ttl }}</li>
+                    <li>{{ user.pekerjaan }}</li>
+                    <li>{{ user.agama }}</li>
+                    <li>{{ user.kewarganegaraan }}</li>
+                    <li>{{ user.alamat }}</li>
+                    <li>{{ data.keterangan }}</li>
+                </ul>
+            </div>
+        </div>
+        <p>Orang tersebut diatas, adalah <b>benar-benar warga kami dan berkelakuan baik di masyarakat</b>. Surat keterangan ini dibuat untuk keperluan <b>{{ data.keperluan }}</b>.</p>
+        <p>Demikianlah Surat Keterangan ini kami buat dengan sebenernya untuk dipergunakan sebagaimana mestinya.</p>
+    </div>
+
+    {% include '../include/surat/ttd.html' %}
+{% endblock %}

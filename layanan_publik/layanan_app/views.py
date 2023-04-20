@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden, JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.contrib import messages
@@ -8,6 +8,7 @@ from .models import *
 import uuid
 from django.db.models import Count
 from .forms import *
+from django.db.models import Q
 
 
 def get_id():
@@ -47,7 +48,10 @@ def do_login(request):
             login(request, user)
             if user.get_role_display() == "Penduduk":
                 return HttpResponseRedirect('penduduk/dashboard')
-
+            elif user.get_role_display() == "Petugas Desa":
+                return HttpResponseRedirect('petugas/dashboard')
+            elif user.get_role_display() == "Kepala Desa":
+                return HttpResponseRedirect('kepala/dashboard')
         else:
             messages.add_message(request, messages.ERROR,
                                  "Username atau Password Salah!")
@@ -57,8 +61,153 @@ def do_login(request):
 
 
 @login_required
+def surat(request):
+    return render(request, 'surat.html')
+
+
+def nikah_surat(request, id):
+    get_user = get_object_or_404(User, username=request.user)
+    get_laporan = get_object_or_404(Laporan, id_laporan=id)
+    get_data = get_object_or_404(Nikah, id_laporan_id=get_laporan.id)
+    context = {
+        'title': "SURAT KETERANGAN MENIKAH",
+        'kode_surat': '140/03/SR/RKT/2023',
+        'laporan': get_laporan,
+        'data': get_data,
+        'user': get_user
+    }
+    return render(request, 'surat/nikah.html', context)
+
+
+def surat_kematian(request, id):
+    get_user = get_object_or_404(User, username=request.user)
+    get_laporan = get_object_or_404(Laporan, id_laporan=id)
+    get_data = get_object_or_404(Surat_Kematian, id_laporan_id=get_laporan.id)
+    context = {
+        'title': "SURAT KETERANGAN KEMATIAN",
+        'kode_surat': '140/03/SR/RKT/2023',
+        'laporan': get_laporan,
+        'data': get_data,
+        'user': get_user
+    }
+    return render(request, 'surat/surat_kematian.html', context)
+
+
+def surat_pindah(request, id):
+    get_user = get_object_or_404(User, username=request.user)
+    get_laporan = get_object_or_404(Laporan, id_laporan=id)
+    get_data = get_object_or_404(Surat_Pindah, id_laporan_id=get_laporan.id)
+    context = {
+        'title': "SURAT KETERANGAN PINDAH",
+        'kode_surat': '140/03/SR/RKT/2023',
+        'laporan': get_laporan,
+        'data': get_data,
+        'user': get_user
+    }
+    return render(request, 'surat/surat_pindah.html', context)
+
+
+def surat_kelahiran(request, id):
+    get_user = get_object_or_404(User, username=request.user)
+    get_laporan = get_object_or_404(Laporan, id_laporan=id)
+    get_data = get_object_or_404(Surat_Kelahiran, id_laporan_id=get_laporan.id)
+    context = {
+        'title': "SURAT KETERANGAN KELAHIRAN",
+        'kode_surat': '140/03/SR/RKT/2023',
+        'laporan': get_laporan,
+        'data': get_data,
+        'user': get_user
+    }
+    return render(request, 'surat/surat_kelahiran.html', context)
+
+
+def skck(request, id):
+    get_user = get_object_or_404(User, username=request.user)
+    get_laporan = get_object_or_404(Laporan, id_laporan=id)
+    get_data = get_object_or_404(Skck, id_laporan_id=get_laporan.id)
+    context = {
+        'title': "SURAT KETERANGAN CATATAN KEPOLISIAN",
+        'kode_surat': '140/03/SR/RKT/2023',
+        'laporan': get_laporan,
+        'data': get_data,
+        'user': get_user
+    }
+    return render(request, 'surat/skck.html', context)
+
+
+def sku(request, id):
+    get_user = get_object_or_404(User, username=request.user)
+    get_laporan = get_object_or_404(Laporan, id_laporan=id)
+    get_data = get_object_or_404(Sku, id_laporan_id=get_laporan.id)
+    context = {
+        'title': "SURAT KETERANGAN USAHA",
+        'kode_surat': '140/03/SR/RKT/2023',
+        'laporan': get_laporan,
+        'data': get_data,
+        'user': get_user
+    }
+    return render(request, 'surat/sku.html', context)
+
+
+def sktm_kes(request, id):
+    get_user = get_object_or_404(User, username=request.user)
+    get_laporan = get_object_or_404(Laporan, id_laporan=id)
+    get_data = get_object_or_404(Sktm_Kes, id_laporan_id=get_laporan.id)
+    context = {
+        'title': "SURAT KETERANGAN TIDAK MAMPU",
+        'kode_surat': '140/03/SR/RKT/2023',
+        'laporan': get_laporan,
+        'data': get_data,
+        'user': get_user
+    }
+    return render(request, 'surat/sktm_kes.html', context)
+
+
+def sktm_pend(request, id):
+    get_user = get_object_or_404(User, username=request.user)
+    get_laporan = get_object_or_404(Laporan, id_laporan=id)
+    get_data = get_object_or_404(Sktm_Pend, id_laporan_id=get_laporan.id)
+    context = {
+        'title': "SURAT KETERANGAN TIDAK MAMPU",
+        'kode_surat': '140/03/SR/RKT/2023',
+        'laporan': get_laporan,
+        'data': get_data,
+        'user': get_user
+    }
+    return render(request, 'surat/sktm_pend.html', context)
+
+
+def domisili(request, id):
+    get_user = get_object_or_404(User, username=request.user)
+    get_laporan = get_object_or_404(Laporan, id_laporan=id)
+    get_data = get_object_or_404(Domisili, id_laporan_id=get_laporan.id)
+    context = {
+        'title': "SURAT KETERANGAN DOMISILI",
+        'kode_surat': '140/03/SR/RKT/2023',
+        'laporan': get_laporan,
+        'data': get_data,
+        'user': get_user
+    }
+    return render(request, 'surat/domisili.html', context)
+
+
+def beda_nama(request, id):
+    get_user = get_object_or_404(User, username=request.user)
+    get_laporan = get_object_or_404(Laporan, id_laporan=id)
+    get_data = get_object_or_404(Beda_Nama, id_laporan_id=get_laporan.id)
+    context = {
+        'title': "SURAT KETERANGAN BEDA NAMA",
+        'kode_surat': '140/03/SR/RKT/2023',
+        'laporan': get_laporan,
+        'data': get_data,
+        'user': get_user
+    }
+    return render(request, 'surat/beda_nama.html', context)
+
+
+@login_required
 def dashboard_penduduk(request):
-    get_detail = get_object_or_404(User, username=request.user)
+    get_detail = get_object_or_404(User, username=request.user, role=1)
     get_laporan = Laporan.objects.filter(
         id_user_id=request.user.pk).order_by('-id')
 
@@ -81,8 +230,72 @@ def dashboard_penduduk(request):
 
 
 @login_required
+def dashboard_petugas(request):
+    get_detail = get_object_or_404(User, username=request.user, role=2)
+    get_laporan = Laporan.objects.filter(Q(is_active=0) | Q(
+        is_active=2) | Q(is_active=3)).order_by('-id')
+
+    count_all = Laporan.objects.all().count()
+    count_not = Laporan.objects.filter(is_active=0).count()
+    count_done = Laporan.objects.filter(is_active=1).count()
+
+    context = {
+        'title': 'Dashboard Petugas',
+        'data': get_detail,
+        'laporan': get_laporan,
+        'count_all': count_all,
+        'count_not': count_not,
+        'count_done': count_done
+    }
+    return render(request, 'dashboard_petugas.html', context)
+
+
+@login_required
+def dashboard_kepala(request):
+    get_detail = get_object_or_404(User, username=request.user, role=3)
+    get_laporan = Laporan.objects.filter(Q(is_active=0) | Q(
+        is_active=2) | Q(is_active=3)).order_by('-id')
+
+    count_all = Laporan.objects.all().count()
+    count_not = Laporan.objects.filter(is_active=0).count()
+    count_done = Laporan.objects.filter(is_active=1).count()
+
+    context = {
+        'title': 'Dashboard Petugas',
+        'data': get_detail,
+        'laporan': get_laporan,
+        'count_all': count_all,
+        'count_not': count_not,
+        'count_done': count_done
+    }
+    return render(request, 'dashboard_kepala.html', context)
+
+
+@login_required
+def list_surat_selesai(request):
+    get_detail = get_object_or_404(
+        User, Q(role=2) | Q(role=3), username=request.user)
+    get_laporan = Laporan.objects.filter(Q(is_active=1)).order_by('-id')
+
+    count_all = Laporan.objects.all().count()
+    count_not = Laporan.objects.filter(is_active=0).count()
+    count_done = Laporan.objects.filter(is_active=1).count()
+
+    context = {
+        'title': 'Dashboard Petugas',
+        'data': get_detail,
+        'laporan': get_laporan,
+        'count_all': count_all,
+        'count_not': count_not,
+        'count_done': count_done
+    }
+
+    return render(request, 'list_surat_selesai.html', context)
+
+
+@login_required
 def add_pengajuan(request):
-    get_detail = get_object_or_404(User, username=request.user)
+    get_detail = get_object_or_404(User, username=request.user, role=1)
     context = {
         'title': 'Tambah Pengajuan Surat',
         'data': get_detail
@@ -91,18 +304,114 @@ def add_pengajuan(request):
     return render(request, 'add_pengajuan.html', context)
 
 
+def get_detail_form(type_laporan, id):
+    if type_laporan == 'nikah':
+        instance = Nikah.objects.get(id_laporan_id=id)
+        return NikahForm(instance=instance)
+    elif type_laporan == 'surat_kelahiran':
+        instance = Surat_Kelahiran.objects.get(id_laporan_id=id)
+        return Surat_KelahiranForm(instance=instance)
+    elif type_laporan == 'surat_pindah':
+        instance = Surat_Pindah.objects.get(id_laporan_id=id)
+        return Surat_PindahForm(instance=instance)
+    elif type_laporan == 'skck':
+        instance = Skck.objects.get(id_laporan_id=id)
+        return SkckForm(instance=instance)
+    elif type_laporan == 'sku':
+        instance = Sku.objects.get(id_laporan_id=id)
+        return SkuForm(instance=instance)
+    elif type_laporan == 'sktm_kes':
+        instance = Sktm_Kes.objects.get(id_laporan_id=id)
+        return Sktm_KesForm(instance=instance)
+    elif type_laporan == 'sktm_pend':
+        instance = Sktm_Pend.objects.get(id_laporan_id=id)
+        return Sktm_PendForm(instance=instance)
+    elif type_laporan == 'domisili':
+        instance = Domisili.objects.get(id_laporan_id=id)
+        return DomisiliForm(instance=instance)
+    elif type_laporan == 'beda_nama':
+        instance = Beda_Nama.objects.get(id_laporan_id=id)
+        return Beda_NamaForm(instance=instance)
+    elif type_laporan == 'surat_kematian':
+        instance = Surat_Kematian.objects.get(id_laporan_id=id)
+        return Surat_KematianForm(instance=instance)
+
+
 @login_required
 def detail_pengajuan(request, id):
     get_detail = get_object_or_404(User, username=request.user)
     get_laporan = Laporan.objects.get(id_laporan=id)
     form = SuratForm(instance=get_laporan)
+    detail_form = get_detail_form(get_laporan.jenis_surat, get_laporan.id)
     context = {
         'title': 'Tambah Pengajuan Surat',
         'data': get_detail,
-        'form': form
+        'form': form,
+        'detail_form': detail_form,
+        'data_laporan': get_laporan
     }
 
     return render(request, 'detail_pengajuan.html', context)
+
+
+@login_required
+def acc_surat(request):
+    if request.method == 'POST':
+        get_detail = get_object_or_404(
+            User, Q(role=2) | Q(role=3), username=request.user)
+        id_laporan = request.POST['id_laporan']
+        status = request.POST['status']
+        change = get_object_or_404(Laporan, id_laporan=id_laporan)
+
+        if status == 'petugas':
+            # change status to acc kepala desa
+            try:
+                change.is_active = 2
+                change.save()
+                return JsonResponse({'status': True, 'data': "created"})
+            except Exception as e:
+                messages.add_message(request, messages.ERROR,
+                                     "Terjadi kesalahan " + str(e))
+                return JsonResponse({'status': False, 'data': str(e)})
+        else:
+            try:
+                change.is_active = 1
+                change.save()
+                return JsonResponse({'status': True, 'data': "created"})
+            except Exception as e:
+                return JsonResponse({'status': False, 'data': str(e)})
+    else:
+        return HttpResponseForbidden()
+
+
+@login_required
+def tolak_surat(request):
+    if request.method == 'POST':
+        get_detail = get_object_or_404(
+            User, Q(role=2) | Q(role=3), username=request.user)
+        id_laporan = request.POST['id_laporan']
+        status = request.POST['status']
+        change = get_object_or_404(Laporan, id_laporan=id_laporan)
+
+        if status == 'petugas':
+            # change status to acc kepala desa
+            try:
+                change.is_active = 3
+                change.save()
+                return JsonResponse({'status': True, 'data': "created"})
+            except Exception as e:
+                messages.add_message(request, messages.ERROR,
+                                     "Terjadi kesalahan " + str(e))
+                return JsonResponse({'status': False, 'data': str(e)})
+        else:
+            try:
+                change.is_active = 3
+                change.save()
+                return JsonResponse({'status': True, 'data': "created"})
+            except Exception as e:
+                return JsonResponse({'status': False, 'data': str(e)})
+    else:
+        return HttpResponseForbidden()
 
 
 @login_required

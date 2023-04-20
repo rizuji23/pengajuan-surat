@@ -7,8 +7,15 @@
                 <ul class="navbar-nav">
                     {% with url_name=request.resolver_match.url_name %}
                     <li class="nav-item">
-                        <a class="nav-link {% if url_name == 'index' %}active{% endif %}" href="{% url 'dashboard_penduduk_view' %}">
+                        <a class="nav-link {% if url_name == 'index' %}active{% endif %}" href="{% url 'dashboard_petugas_view' %}">
                             <i class="mdi mdi-storefront mr-2"></i>Dashboard
+                        </a>
+                    </li>
+                    
+
+                    <li class="nav-item">
+                        <a class="nav-link {% if url_name == 'index' %}active{% endif %}" href="{% url 'list_done' %}">
+                            <i class="mdi mdi-playlist-check mr-2"></i>List Surat Selesai
                         </a>
                     </li>
                     {% endwith %}
