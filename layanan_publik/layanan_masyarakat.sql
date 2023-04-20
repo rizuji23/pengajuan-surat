@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 20, 2023 at 12:22 PM
+-- Generation Time: Apr 20, 2023 at 02:17 PM
 -- Server version: 8.0.27
 -- PHP Version: 7.4.26
 
@@ -30,10 +30,10 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `auth_group`;
 CREATE TABLE IF NOT EXISTS `auth_group` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(150) NOT NULL,
+  `name` varchar(150) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- --------------------------------------------------------
 
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `auth_group_permissions` (
   UNIQUE KEY `auth_group_permissions_group_id_permission_id_0cd325b0_uniq` (`group_id`,`permission_id`),
   KEY `auth_group_permissions_group_id_b120cbf9` (`group_id`),
   KEY `auth_group_permissions_permission_id_84c5c92e` (`permission_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- --------------------------------------------------------
 
@@ -61,13 +61,13 @@ CREATE TABLE IF NOT EXISTS `auth_group_permissions` (
 DROP TABLE IF EXISTS `auth_permission`;
 CREATE TABLE IF NOT EXISTS `auth_permission` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `content_type_id` int NOT NULL,
-  `codename` varchar(100) NOT NULL,
+  `codename` varchar(100) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id`,`codename`),
   KEY `auth_permission_content_type_id_2f476e4b` (`content_type_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=73 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=73 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Dumping data for table `auth_permission`
@@ -156,19 +156,19 @@ INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALU
 DROP TABLE IF EXISTS `auth_user`;
 CREATE TABLE IF NOT EXISTS `auth_user` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `password` varchar(128) NOT NULL,
+  `password` varchar(128) COLLATE utf8mb4_bin NOT NULL,
   `last_login` datetime(6) DEFAULT NULL,
   `is_superuser` tinyint(1) NOT NULL,
-  `username` varchar(150) NOT NULL,
-  `first_name` varchar(150) NOT NULL,
-  `last_name` varchar(150) NOT NULL,
-  `email` varchar(254) NOT NULL,
+  `username` varchar(150) COLLATE utf8mb4_bin NOT NULL,
+  `first_name` varchar(150) COLLATE utf8mb4_bin NOT NULL,
+  `last_name` varchar(150) COLLATE utf8mb4_bin NOT NULL,
+  `email` varchar(254) COLLATE utf8mb4_bin NOT NULL,
   `is_staff` tinyint(1) NOT NULL,
   `is_active` tinyint(1) NOT NULL,
   `date_joined` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- --------------------------------------------------------
 
@@ -185,7 +185,7 @@ CREATE TABLE IF NOT EXISTS `auth_user_groups` (
   UNIQUE KEY `auth_user_groups_user_id_group_id_94350c0c_uniq` (`user_id`,`group_id`),
   KEY `auth_user_groups_user_id_6a12ed8b` (`user_id`),
   KEY `auth_user_groups_group_id_97559544` (`group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- --------------------------------------------------------
 
@@ -202,7 +202,7 @@ CREATE TABLE IF NOT EXISTS `auth_user_user_permissions` (
   UNIQUE KEY `auth_user_user_permissions_user_id_permission_id_14a6b632_uniq` (`user_id`,`permission_id`),
   KEY `auth_user_user_permissions_user_id_a95ead1b` (`user_id`),
   KEY `auth_user_user_permissions_permission_id_1fbb5f2c` (`permission_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- --------------------------------------------------------
 
@@ -214,10 +214,10 @@ DROP TABLE IF EXISTS `django_admin_log`;
 CREATE TABLE IF NOT EXISTS `django_admin_log` (
   `id` int NOT NULL AUTO_INCREMENT,
   `action_time` datetime(6) NOT NULL,
-  `object_id` longtext,
-  `object_repr` varchar(200) NOT NULL,
+  `object_id` longtext COLLATE utf8mb4_bin,
+  `object_repr` varchar(200) COLLATE utf8mb4_bin NOT NULL,
   `action_flag` smallint UNSIGNED NOT NULL,
-  `change_message` longtext NOT NULL,
+  `change_message` longtext COLLATE utf8mb4_bin NOT NULL,
   `content_type_id` int DEFAULT NULL,
   `user_id` int NOT NULL,
   PRIMARY KEY (`id`),
@@ -256,11 +256,11 @@ INSERT INTO `django_admin_log` (`id`, `action_time`, `object_id`, `object_repr`,
 DROP TABLE IF EXISTS `django_content_type`;
 CREATE TABLE IF NOT EXISTS `django_content_type` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `app_label` varchar(100) NOT NULL,
-  `model` varchar(100) NOT NULL,
+  `app_label` varchar(100) COLLATE utf8mb4_bin NOT NULL,
+  `model` varchar(100) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label`,`model`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Dumping data for table `django_content_type`
@@ -295,11 +295,11 @@ INSERT INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
 DROP TABLE IF EXISTS `django_migrations`;
 CREATE TABLE IF NOT EXISTS `django_migrations` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `app` varchar(255) NOT NULL,
-  `name` varchar(255) NOT NULL,
+  `app` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `applied` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Dumping data for table `django_migrations`
@@ -344,12 +344,12 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 
 DROP TABLE IF EXISTS `django_session`;
 CREATE TABLE IF NOT EXISTS `django_session` (
-  `session_key` varchar(40) NOT NULL,
-  `session_data` longtext NOT NULL,
+  `session_key` varchar(40) COLLATE utf8mb4_bin NOT NULL,
+  `session_data` longtext COLLATE utf8mb4_bin NOT NULL,
   `expire_date` datetime(6) NOT NULL,
   PRIMARY KEY (`session_key`),
   KEY `django_session_expire_date_a5c62663` (`expire_date`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- --------------------------------------------------------
 
@@ -360,22 +360,22 @@ CREATE TABLE IF NOT EXISTS `django_session` (
 DROP TABLE IF EXISTS `layanan_app_beda_nama`;
 CREATE TABLE IF NOT EXISTS `layanan_app_beda_nama` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `id_beda_nama` varchar(100) NOT NULL,
+  `id_beda_nama` varchar(100) COLLATE utf8mb4_bin NOT NULL,
   `nik` bigint NOT NULL,
-  `dokumen_keliru` varchar(200) DEFAULT NULL,
-  `dokumen_benar` varchar(200) DEFAULT NULL,
-  `keterangan` longtext NOT NULL,
+  `dokumen_keliru` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `dokumen_benar` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `keterangan` longtext COLLATE utf8mb4_bin NOT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   `id_laporan_id` int NOT NULL,
-  `dokumen_pembeda` varchar(200) DEFAULT NULL,
-  `kk` varchar(200) DEFAULT NULL,
-  `ktp` varchar(200) DEFAULT NULL,
-  `surat_pengantar` varchar(200) DEFAULT NULL,
-  `surat_pernyataan` varchar(200) DEFAULT NULL,
+  `dokumen_pembeda` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `kk` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `ktp` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `surat_pengantar` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `surat_pernyataan` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `layanan_app_beda_nama_id_laporan_id_6ea96c77` (`id_laporan_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Dumping data for table `layanan_app_beda_nama`
@@ -393,19 +393,19 @@ INSERT INTO `layanan_app_beda_nama` (`id`, `id_beda_nama`, `nik`, `dokumen_kelir
 DROP TABLE IF EXISTS `layanan_app_domisili`;
 CREATE TABLE IF NOT EXISTS `layanan_app_domisili` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `id_domisili` varchar(100) NOT NULL,
+  `id_domisili` varchar(100) COLLATE utf8mb4_bin NOT NULL,
   `nik` bigint NOT NULL,
-  `keterangan` longtext NOT NULL,
-  `masa_berlaku` varchar(100) NOT NULL,
+  `keterangan` longtext COLLATE utf8mb4_bin NOT NULL,
+  `masa_berlaku` varchar(100) COLLATE utf8mb4_bin NOT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   `id_laporan_id` int DEFAULT NULL,
-  `kk` varchar(200) DEFAULT NULL,
-  `ktp` varchar(200) DEFAULT NULL,
-  `pas_foto` varchar(200) DEFAULT NULL,
+  `kk` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `ktp` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `pas_foto` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `layanan_app_domisili_id_laporan_id_85ef0dff` (`id_laporan_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Dumping data for table `layanan_app_domisili`
@@ -423,13 +423,13 @@ INSERT INTO `layanan_app_domisili` (`id`, `id_domisili`, `nik`, `keterangan`, `m
 DROP TABLE IF EXISTS `layanan_app_laporan`;
 CREATE TABLE IF NOT EXISTS `layanan_app_laporan` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `id_laporan` varchar(100) NOT NULL,
-  `jenis_surat` varchar(100) NOT NULL,
+  `id_laporan` varchar(100) COLLATE utf8mb4_bin NOT NULL,
+  `jenis_surat` varchar(100) COLLATE utf8mb4_bin NOT NULL,
   `is_active` smallint UNSIGNED DEFAULT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   `id_user_id` bigint NOT NULL,
-  `kode_surat` varchar(100) DEFAULT NULL,
+  `kode_surat` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `layanan_app_laporan_id_user_id_360eee0a` (`id_user_id`)
 ) ;
@@ -465,26 +465,26 @@ INSERT INTO `layanan_app_laporan` (`id`, `id_laporan`, `jenis_surat`, `is_active
 DROP TABLE IF EXISTS `layanan_app_nikah`;
 CREATE TABLE IF NOT EXISTS `layanan_app_nikah` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `id_nikah` varchar(100) NOT NULL,
+  `id_nikah` varchar(100) COLLATE utf8mb4_bin NOT NULL,
   `nik` bigint NOT NULL,
-  `mempelai_pria` varchar(100) NOT NULL,
-  `mempelai_wanita` varchar(100) NOT NULL,
-  `nama_wali` varchar(100) NOT NULL,
+  `mempelai_pria` varchar(100) COLLATE utf8mb4_bin NOT NULL,
+  `mempelai_wanita` varchar(100) COLLATE utf8mb4_bin NOT NULL,
+  `nama_wali` varchar(100) COLLATE utf8mb4_bin NOT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   `id_laporan_id` int NOT NULL,
-  `akta_lahir` varchar(200) DEFAULT NULL,
-  `foto_pas_1` varchar(200) DEFAULT NULL,
-  `foto_pas_2` varchar(200) DEFAULT NULL,
-  `ijazah` varchar(200) DEFAULT NULL,
-  `kk` varchar(200) DEFAULT NULL,
-  `ktp` varchar(200) DEFAULT NULL,
-  `surat_belum_nikah` varchar(200) DEFAULT NULL,
-  `surat_persetujuan` varchar(200) DEFAULT NULL,
-  `surat_rt_rw` varchar(200) DEFAULT NULL,
+  `akta_lahir` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `foto_pas_1` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `foto_pas_2` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `ijazah` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `kk` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `ktp` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `surat_belum_nikah` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `surat_persetujuan` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `surat_rt_rw` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `layanan_app_nikah_id_laporan_id_c4a8dd44` (`id_laporan_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Dumping data for table `layanan_app_nikah`
@@ -507,20 +507,20 @@ INSERT INTO `layanan_app_nikah` (`id`, `id_nikah`, `nik`, `mempelai_pria`, `memp
 DROP TABLE IF EXISTS `layanan_app_skck`;
 CREATE TABLE IF NOT EXISTS `layanan_app_skck` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `id_skck` varchar(100) NOT NULL,
+  `id_skck` varchar(100) COLLATE utf8mb4_bin NOT NULL,
   `nik` bigint NOT NULL,
-  `keterangan` longtext NOT NULL,
-  `keperluan` longtext NOT NULL,
+  `keterangan` longtext COLLATE utf8mb4_bin NOT NULL,
+  `keperluan` longtext COLLATE utf8mb4_bin NOT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   `id_laporan_id` int NOT NULL,
-  `akta` varchar(200) DEFAULT NULL,
-  `kk` varchar(200) DEFAULT NULL,
-  `pas_foto` varchar(200) DEFAULT NULL,
-  `sim` varchar(200) DEFAULT NULL,
+  `akta` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `kk` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `pas_foto` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `sim` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `layanan_app_skck_id_laporan_id_b51c7ac1` (`id_laporan_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Dumping data for table `layanan_app_skck`
@@ -538,20 +538,20 @@ INSERT INTO `layanan_app_skck` (`id`, `id_skck`, `nik`, `keterangan`, `keperluan
 DROP TABLE IF EXISTS `layanan_app_sktm_kes`;
 CREATE TABLE IF NOT EXISTS `layanan_app_sktm_kes` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `id_sktm_kes` varchar(100) NOT NULL,
+  `id_sktm_kes` varchar(100) COLLATE utf8mb4_bin NOT NULL,
   `nik` bigint NOT NULL,
-  `nama_anggota_keluarga` varchar(100) NOT NULL,
-  `hubungan` varchar(100) NOT NULL,
-  `keterangan` longtext NOT NULL,
+  `nama_anggota_keluarga` varchar(100) COLLATE utf8mb4_bin NOT NULL,
+  `hubungan` varchar(100) COLLATE utf8mb4_bin NOT NULL,
+  `keterangan` longtext COLLATE utf8mb4_bin NOT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   `id_laporan_id` int NOT NULL,
-  `kk` varchar(200) DEFAULT NULL,
-  `ktp` varchar(200) DEFAULT NULL,
-  `surat_pengantar` varchar(200) DEFAULT NULL,
+  `kk` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `ktp` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `surat_pengantar` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `layanan_app_sktm_kes_id_laporan_id_d2479f0f` (`id_laporan_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Dumping data for table `layanan_app_sktm_kes`
@@ -569,21 +569,21 @@ INSERT INTO `layanan_app_sktm_kes` (`id`, `id_sktm_kes`, `nik`, `nama_anggota_ke
 DROP TABLE IF EXISTS `layanan_app_sktm_pend`;
 CREATE TABLE IF NOT EXISTS `layanan_app_sktm_pend` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `id_sktm_pend` varchar(100) NOT NULL,
+  `id_sktm_pend` varchar(100) COLLATE utf8mb4_bin NOT NULL,
   `nik` bigint NOT NULL,
-  `nama_tanggungan` varchar(100) NOT NULL,
+  `nama_tanggungan` varchar(100) COLLATE utf8mb4_bin NOT NULL,
   `jml_tanggungan` int NOT NULL,
-  `hubungan_tanggungan` varchar(100) NOT NULL,
-  `keterangan` longtext NOT NULL,
+  `hubungan_tanggungan` varchar(100) COLLATE utf8mb4_bin NOT NULL,
+  `keterangan` longtext COLLATE utf8mb4_bin NOT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   `id_laporan_id` int NOT NULL,
-  `kk` varchar(200) DEFAULT NULL,
-  `ktp` varchar(200) DEFAULT NULL,
-  `surat_pengantar` varchar(200) DEFAULT NULL,
+  `kk` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `ktp` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `surat_pengantar` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `layanan_app_sktm_pend_id_laporan_id_6198d1f8` (`id_laporan_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Dumping data for table `layanan_app_sktm_pend`
@@ -601,22 +601,22 @@ INSERT INTO `layanan_app_sktm_pend` (`id`, `id_sktm_pend`, `nik`, `nama_tanggung
 DROP TABLE IF EXISTS `layanan_app_sku`;
 CREATE TABLE IF NOT EXISTS `layanan_app_sku` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `id_sku` varchar(100) NOT NULL,
+  `id_sku` varchar(100) COLLATE utf8mb4_bin NOT NULL,
   `nik` bigint NOT NULL,
-  `nama_usaha` varchar(100) NOT NULL,
-  `jenis_usaha` varchar(100) NOT NULL,
-  `alamat_usaha` varchar(100) NOT NULL,
-  `keterangan` longtext NOT NULL,
+  `nama_usaha` varchar(100) COLLATE utf8mb4_bin NOT NULL,
+  `jenis_usaha` varchar(100) COLLATE utf8mb4_bin NOT NULL,
+  `alamat_usaha` varchar(100) COLLATE utf8mb4_bin NOT NULL,
+  `keterangan` longtext COLLATE utf8mb4_bin NOT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   `id_laporan_id` int NOT NULL,
-  `kk` varchar(200) DEFAULT NULL,
-  `ktp` varchar(200) DEFAULT NULL,
-  `pas_foto` varchar(200) DEFAULT NULL,
-  `surat_pengantar` varchar(200) DEFAULT NULL,
+  `kk` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `ktp` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `pas_foto` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `surat_pengantar` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `layanan_app_sku_id_laporan_id_fafad99a` (`id_laporan_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Dumping data for table `layanan_app_sku`
@@ -634,25 +634,25 @@ INSERT INTO `layanan_app_sku` (`id`, `id_sku`, `nik`, `nama_usaha`, `jenis_usaha
 DROP TABLE IF EXISTS `layanan_app_surat_kelahiran`;
 CREATE TABLE IF NOT EXISTS `layanan_app_surat_kelahiran` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `id_surat_kelahiran` varchar(100) NOT NULL,
+  `id_surat_kelahiran` varchar(100) COLLATE utf8mb4_bin NOT NULL,
   `nik` bigint NOT NULL,
-  `nama_bayi` varchar(100) NOT NULL,
-  `ttl` varchar(100) NOT NULL,
-  `jenis_kelamin_anak` varchar(100) NOT NULL,
-  `hari_jam_lahir` varchar(100) NOT NULL,
+  `nama_bayi` varchar(100) COLLATE utf8mb4_bin NOT NULL,
+  `ttl` varchar(100) COLLATE utf8mb4_bin NOT NULL,
+  `jenis_kelamin_anak` varchar(100) COLLATE utf8mb4_bin NOT NULL,
+  `hari_jam_lahir` varchar(100) COLLATE utf8mb4_bin NOT NULL,
   `anak_ke` int NOT NULL,
-  `nama_ayah` varchar(100) NOT NULL,
-  `nama_ibu` varchar(100) NOT NULL,
+  `nama_ayah` varchar(100) COLLATE utf8mb4_bin NOT NULL,
+  `nama_ibu` varchar(100) COLLATE utf8mb4_bin NOT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   `id_laporan_id` int NOT NULL,
-  `kk` varchar(200) DEFAULT NULL,
-  `ktp` varchar(200) DEFAULT NULL,
-  `surat_dokter` varchar(200) DEFAULT NULL,
-  `surat_rt_rw` varchar(200) DEFAULT NULL,
+  `kk` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `ktp` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `surat_dokter` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `surat_rt_rw` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `layanan_app_surat_kelahiran_id_laporan_id_843d9a56` (`id_laporan_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Dumping data for table `layanan_app_surat_kelahiran`
@@ -670,23 +670,23 @@ INSERT INTO `layanan_app_surat_kelahiran` (`id`, `id_surat_kelahiran`, `nik`, `n
 DROP TABLE IF EXISTS `layanan_app_surat_kematian`;
 CREATE TABLE IF NOT EXISTS `layanan_app_surat_kematian` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `id_surat_kematian` varchar(100) NOT NULL,
+  `id_surat_kematian` varchar(100) COLLATE utf8mb4_bin NOT NULL,
   `nik` bigint NOT NULL,
-  `nama_wafat` varchar(100) NOT NULL,
-  `penyebab` varchar(100) NOT NULL,
-  `hari_tanggal_wafat` varchar(100) NOT NULL,
-  `pelapor` varchar(100) NOT NULL,
-  `hubungan_pelapor` varchar(100) NOT NULL,
+  `nama_wafat` varchar(100) COLLATE utf8mb4_bin NOT NULL,
+  `penyebab` varchar(100) COLLATE utf8mb4_bin NOT NULL,
+  `hari_tanggal_wafat` varchar(100) COLLATE utf8mb4_bin NOT NULL,
+  `pelapor` varchar(100) COLLATE utf8mb4_bin NOT NULL,
+  `hubungan_pelapor` varchar(100) COLLATE utf8mb4_bin NOT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   `id_laporan_id` int NOT NULL,
-  `ktp_kk` varchar(200) DEFAULT NULL,
-  `ktp_kk_pelapor` varchar(200) DEFAULT NULL,
-  `ktp_pasangan` varchar(200) DEFAULT NULL,
-  `surat_keterangan` varchar(200) DEFAULT NULL,
+  `ktp_kk` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `ktp_kk_pelapor` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `ktp_pasangan` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `surat_keterangan` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `layanan_app_surat_kematian_id_laporan_id_b5bcd5d2` (`id_laporan_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Dumping data for table `layanan_app_surat_kematian`
@@ -704,22 +704,22 @@ INSERT INTO `layanan_app_surat_kematian` (`id`, `id_surat_kematian`, `nik`, `nam
 DROP TABLE IF EXISTS `layanan_app_surat_pindah`;
 CREATE TABLE IF NOT EXISTS `layanan_app_surat_pindah` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `id_surat_pindah` varchar(100) NOT NULL,
+  `id_surat_pindah` varchar(100) COLLATE utf8mb4_bin NOT NULL,
   `nik` bigint NOT NULL,
-  `alamat_asal` longtext NOT NULL,
-  `pindah_ke` longtext NOT NULL,
-  `pengikut` longtext NOT NULL,
-  `keterangan` longtext NOT NULL,
+  `alamat_asal` longtext COLLATE utf8mb4_bin NOT NULL,
+  `pindah_ke` longtext COLLATE utf8mb4_bin NOT NULL,
+  `pengikut` longtext COLLATE utf8mb4_bin NOT NULL,
+  `keterangan` longtext COLLATE utf8mb4_bin NOT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   `id_laporan_id` int NOT NULL,
-  `kk` varchar(200) DEFAULT NULL,
-  `ktp` varchar(200) DEFAULT NULL,
-  `pas_foto` varchar(200) DEFAULT NULL,
-  `surat_rt_rw` varchar(200) DEFAULT NULL,
+  `kk` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `ktp` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `pas_foto` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
+  `surat_rt_rw` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `layanan_app_surat_pindah_id_laporan_id_989aa0d4` (`id_laporan_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Dumping data for table `layanan_app_surat_pindah`
@@ -737,26 +737,26 @@ INSERT INTO `layanan_app_surat_pindah` (`id`, `id_surat_pindah`, `nik`, `alamat_
 DROP TABLE IF EXISTS `layanan_app_user`;
 CREATE TABLE IF NOT EXISTS `layanan_app_user` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `password` varchar(128) NOT NULL,
+  `password` varchar(128) COLLATE utf8mb4_bin NOT NULL,
   `last_login` datetime(6) DEFAULT NULL,
   `is_superuser` tinyint(1) NOT NULL,
-  `username` varchar(150) NOT NULL,
-  `first_name` varchar(150) NOT NULL,
-  `last_name` varchar(150) NOT NULL,
-  `email` varchar(254) NOT NULL,
+  `username` varchar(150) COLLATE utf8mb4_bin NOT NULL,
+  `first_name` varchar(150) COLLATE utf8mb4_bin NOT NULL,
+  `last_name` varchar(150) COLLATE utf8mb4_bin NOT NULL,
+  `email` varchar(254) COLLATE utf8mb4_bin NOT NULL,
   `is_staff` tinyint(1) NOT NULL,
   `is_active` tinyint(1) NOT NULL,
   `date_joined` datetime(6) NOT NULL,
   `role` smallint UNSIGNED DEFAULT NULL,
-  `alamat` longtext,
-  `jenis_kelamin` varchar(50) DEFAULT NULL,
+  `alamat` longtext COLLATE utf8mb4_bin,
+  `jenis_kelamin` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL,
   `nik` bigint DEFAULT NULL,
   `no_hp` bigint DEFAULT NULL,
-  `agama` varchar(100) DEFAULT NULL,
-  `kewarganegaraan` varchar(100) DEFAULT NULL,
-  `pekerjaan` varchar(100) DEFAULT NULL,
-  `status` varchar(100) DEFAULT NULL,
-  `ttl` varchar(100) DEFAULT NULL,
+  `agama` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL,
+  `kewarganegaraan` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL,
+  `pekerjaan` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL,
+  `status` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL,
+  `ttl` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
 ) ;
@@ -787,7 +787,7 @@ CREATE TABLE IF NOT EXISTS `layanan_app_user_groups` (
   UNIQUE KEY `layanan_app_user_groups_user_id_group_id_9342ed67_uniq` (`user_id`,`group_id`),
   KEY `layanan_app_user_groups_user_id_6d8f6566` (`user_id`),
   KEY `layanan_app_user_groups_group_id_4869b765` (`group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 -- --------------------------------------------------------
 
@@ -804,7 +804,7 @@ CREATE TABLE IF NOT EXISTS `layanan_app_user_user_permissions` (
   UNIQUE KEY `layanan_app_user_user_pe_user_id_permission_id_d230ed60_uniq` (`user_id`,`permission_id`),
   KEY `layanan_app_user_user_permissions_user_id_ab5add74` (`user_id`),
   KEY `layanan_app_user_user_permissions_permission_id_1f8b3ecc` (`permission_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
