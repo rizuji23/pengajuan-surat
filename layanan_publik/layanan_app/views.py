@@ -9,6 +9,7 @@ import uuid
 from django.db.models import Count
 from .forms import *
 from django.db.models import Q
+from django.contrib.auth.hashers import make_password
 
 
 def get_id():
@@ -36,6 +37,42 @@ def register(request):
         'title': 'Pendaftaran'
     }
     return render(request, 'register.html', context)
+
+
+def do_register(request):
+    if request.method == "POST":
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        nik = request.POST['nik']
+        jenis_kelamin = request.POST['jenis_kelamin']
+        ttl = request.POST['ttl']
+        agama = request.POST['agama']
+        pekerjaan = request.POST['pekerjaan']
+        status = request.POST['status']
+        kewarganegaraan = request.POST['kewarganegaraan']
+        alamat = request.POST['alamat']
+        username = request.POST['username']
+        email = request.POST['email']
+        no_hp = request.POST['no_hp']
+        password = request.POST['password']
+
+        try:
+            user_1 = User(username=username, email=email, password=make_password(password), first_name=first_name, last_name=last_name, nik=nik, jenis_kelamin=jenis_kelamin,
+                                              ttl=ttl, agama=agama, pekerjaan=pekerjaan, status=status, kewarganegaraan=kewarganegaraan, alamat=alamat, no_hp=no_hp, role=1)
+
+            user_1.save()
+
+            messages.add_message(request, messages.SUCCESS,
+                                 "Register penduduk berhasil.")
+            return HttpResponseRedirect('register')
+
+        except Exception as e:
+            messages.add_message(request, messages.ERROR,
+                                 "Terjadi kesalahan " + str(e))
+            return HttpResponseRedirect('register')
+
+    else:
+        return HttpResponseForbidden()
 
 
 def do_login(request):
@@ -71,7 +108,7 @@ def nikah_surat(request, id):
     get_data = get_object_or_404(Nikah, id_laporan_id=get_laporan.id)
     context = {
         'title': "SURAT KETERANGAN MENIKAH",
-        'kode_surat': '140/03/SR/RKT/2023',
+        'kode_surat': get_laporan.kode_surat,
         'laporan': get_laporan,
         'data': get_data,
         'user': get_user
@@ -85,7 +122,7 @@ def surat_kematian(request, id):
     get_data = get_object_or_404(Surat_Kematian, id_laporan_id=get_laporan.id)
     context = {
         'title': "SURAT KETERANGAN KEMATIAN",
-        'kode_surat': '140/03/SR/RKT/2023',
+        'kode_surat': get_laporan.kode_surat,
         'laporan': get_laporan,
         'data': get_data,
         'user': get_user
@@ -99,7 +136,7 @@ def surat_pindah(request, id):
     get_data = get_object_or_404(Surat_Pindah, id_laporan_id=get_laporan.id)
     context = {
         'title': "SURAT KETERANGAN PINDAH",
-        'kode_surat': '140/03/SR/RKT/2023',
+        'kode_surat': get_laporan.kode_surat,
         'laporan': get_laporan,
         'data': get_data,
         'user': get_user
@@ -113,7 +150,7 @@ def surat_kelahiran(request, id):
     get_data = get_object_or_404(Surat_Kelahiran, id_laporan_id=get_laporan.id)
     context = {
         'title': "SURAT KETERANGAN KELAHIRAN",
-        'kode_surat': '140/03/SR/RKT/2023',
+        'kode_surat': get_laporan.kode_surat,
         'laporan': get_laporan,
         'data': get_data,
         'user': get_user
@@ -127,7 +164,7 @@ def skck(request, id):
     get_data = get_object_or_404(Skck, id_laporan_id=get_laporan.id)
     context = {
         'title': "SURAT KETERANGAN CATATAN KEPOLISIAN",
-        'kode_surat': '140/03/SR/RKT/2023',
+        'kode_surat': get_laporan.kode_surat,
         'laporan': get_laporan,
         'data': get_data,
         'user': get_user
@@ -141,7 +178,7 @@ def sku(request, id):
     get_data = get_object_or_404(Sku, id_laporan_id=get_laporan.id)
     context = {
         'title': "SURAT KETERANGAN USAHA",
-        'kode_surat': '140/03/SR/RKT/2023',
+        'kode_surat': get_laporan.kode_surat,
         'laporan': get_laporan,
         'data': get_data,
         'user': get_user
@@ -155,7 +192,7 @@ def sktm_kes(request, id):
     get_data = get_object_or_404(Sktm_Kes, id_laporan_id=get_laporan.id)
     context = {
         'title': "SURAT KETERANGAN TIDAK MAMPU",
-        'kode_surat': '140/03/SR/RKT/2023',
+        'kode_surat': get_laporan.kode_surat,
         'laporan': get_laporan,
         'data': get_data,
         'user': get_user
@@ -169,7 +206,7 @@ def sktm_pend(request, id):
     get_data = get_object_or_404(Sktm_Pend, id_laporan_id=get_laporan.id)
     context = {
         'title': "SURAT KETERANGAN TIDAK MAMPU",
-        'kode_surat': '140/03/SR/RKT/2023',
+        'kode_surat': get_laporan.kode_surat,
         'laporan': get_laporan,
         'data': get_data,
         'user': get_user
@@ -183,7 +220,7 @@ def domisili(request, id):
     get_data = get_object_or_404(Domisili, id_laporan_id=get_laporan.id)
     context = {
         'title': "SURAT KETERANGAN DOMISILI",
-        'kode_surat': '140/03/SR/RKT/2023',
+        'kode_surat': get_laporan.kode_surat,
         'laporan': get_laporan,
         'data': get_data,
         'user': get_user
@@ -197,7 +234,7 @@ def beda_nama(request, id):
     get_data = get_object_or_404(Beda_Nama, id_laporan_id=get_laporan.id)
     context = {
         'title': "SURAT KETERANGAN BEDA NAMA",
-        'kode_surat': '140/03/SR/RKT/2023',
+        'kode_surat': get_laporan.kode_surat,
         'laporan': get_laporan,
         'data': get_data,
         'user': get_user
@@ -420,6 +457,11 @@ def logout_view(request):
     return HttpResponseRedirect('login')
 
 
+def get_code_surat():
+    last_data = Laporan.objects.last()
+    return "511.1/0{}/Ekbang".format(int(last_data.id) + 1)
+
+
 @login_required
 def save_nikah(request):
     if request.method == "POST":
@@ -443,7 +485,8 @@ def save_nikah(request):
 
         # save to laporan
         try:
-            laporan = Laporan(id_laporan=id_laporan, jenis_surat=jenis_surat,
+            kode_surat = get_code_surat()
+            laporan = Laporan(id_laporan=id_laporan, kode_surat=kode_surat, jenis_surat=jenis_surat,
                               id_user_id=get_detail.pk, is_active=0)
             laporan.save()
 
@@ -491,7 +534,8 @@ def save_surat_kelahiran(request):
 
         # save to laporan
         try:
-            laporan = Laporan(id_laporan=id_laporan, jenis_surat=jenis_surat,
+            kode_surat = get_code_surat()
+            laporan = Laporan(id_laporan=id_laporan, kode_surat=kode_surat, jenis_surat=jenis_surat,
                               id_user_id=get_detail.pk, is_active=0)
             laporan.save()
 
@@ -536,7 +580,8 @@ def save_surat_pindah(request):
 
         # save to laporan
         try:
-            laporan = Laporan(id_laporan=id_laporan, jenis_surat=jenis_surat,
+            kode_surat = get_code_surat()
+            laporan = Laporan(id_laporan=id_laporan, kode_surat=kode_surat, jenis_surat=jenis_surat,
                               id_user_id=get_detail.pk, is_active=0)
             laporan.save()
 
@@ -579,7 +624,8 @@ def save_skck(request):
 
         # save to laporan
         try:
-            laporan = Laporan(id_laporan=id_laporan, jenis_surat=jenis_surat,
+            kode_surat = get_code_surat()
+            laporan = Laporan(id_laporan=id_laporan, kode_surat=kode_surat, jenis_surat=jenis_surat,
                               id_user_id=get_detail.pk, is_active=0)
             laporan.save()
 
@@ -624,7 +670,8 @@ def save_sku(request):
 
         # save to laporan
         try:
-            laporan = Laporan(id_laporan=id_laporan, jenis_surat=jenis_surat,
+            kode_surat = get_code_surat()
+            laporan = Laporan(id_laporan=id_laporan, kode_surat=kode_surat, jenis_surat=jenis_surat,
                               id_user_id=get_detail.pk, is_active=0)
             laporan.save()
 
@@ -667,7 +714,8 @@ def save_sktm_kes(request):
 
         # save to laporan
         try:
-            laporan = Laporan(id_laporan=id_laporan, jenis_surat=jenis_surat,
+            kode_surat = get_code_surat()
+            laporan = Laporan(id_laporan=id_laporan, kode_surat=kode_surat, jenis_surat=jenis_surat,
                               id_user_id=get_detail.pk, is_active=0)
             laporan.save()
 
@@ -711,7 +759,8 @@ def save_sktm_pend(request):
 
         # save to laporan
         try:
-            laporan = Laporan(id_laporan=id_laporan, jenis_surat=jenis_surat,
+            kode_surat = get_code_surat()
+            laporan = Laporan(id_laporan=id_laporan, kode_surat=kode_surat, jenis_surat=jenis_surat,
                               id_user_id=get_detail.pk, is_active=0)
             laporan.save()
 
@@ -754,7 +803,8 @@ def save_domisili(request):
 
         # save to laporan
         try:
-            laporan = Laporan(id_laporan=id_laporan, jenis_surat=jenis_surat,
+            kode_surat = get_code_surat()
+            laporan = Laporan(id_laporan=id_laporan, kode_surat=kode_surat, jenis_surat=jenis_surat,
                               id_user_id=get_detail.pk, is_active=0)
             laporan.save()
 
@@ -799,7 +849,8 @@ def save_beda_nama(request):
 
         # save to laporan
         try:
-            laporan = Laporan(id_laporan=id_laporan, jenis_surat=jenis_surat,
+            kode_surat = get_code_surat()
+            laporan = Laporan(id_laporan=id_laporan, kode_surat=kode_surat, jenis_surat=jenis_surat,
                               id_user_id=get_detail.pk, is_active=0)
             laporan.save()
 
@@ -845,7 +896,8 @@ def save_surat_kematian(request):
 
         # save to laporan
         try:
-            laporan = Laporan(id_laporan=id_laporan, jenis_surat=jenis_surat,
+            kode_surat = get_code_surat()
+            laporan = Laporan(id_laporan=id_laporan, kode_surat=kode_surat, jenis_surat=jenis_surat,
                               id_user_id=get_detail.pk, is_active=0)
             laporan.save()
 

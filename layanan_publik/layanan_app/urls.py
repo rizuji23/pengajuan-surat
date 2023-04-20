@@ -11,7 +11,7 @@ urlpatterns = [
          name="dashboard_penduduk_view"),
     path('add_pengajuan', views.add_pengajuan, name="add_pengajuan"),
     path('logout', views.logout_view, name="logout"),
-
+    path('do_register', views.do_register, name="do_register"),
     # save pengajuan
     path('save_nikah', views.save_nikah, name="save_nikah"),
     path('save_surat_kelahiran', views.save_surat_kelahiran,
