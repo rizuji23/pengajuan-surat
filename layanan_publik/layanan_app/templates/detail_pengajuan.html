@@ -40,7 +40,7 @@
 
                         {% if data.role == 2 or data.role == 3 %}
                             <hr>
-                            {% if data_laporan.is_active == 1 and data.role == 2 %}
+                            {% if data_laporan.is_active == 0 and data.role == 2 %}
                             <div class="text-right">
                                 <button class="btn btn-danger mr-3" id="tolak_surat" data="{{ data_laporan.id_laporan }}" role="{% if data.role == 2 %}petugas{% elif data.role == 3 %}kepala{% endif %}">Tolak</button>
                                 <button class="btn btn-primary" id="acc_surat" data="{{ data_laporan.id_laporan }}" role="{% if data.role == 2 %}petugas{% elif data.role == 3 %}kepala{% endif %}">Acc</button>
