@@ -23,7 +23,7 @@ class User(AbstractUser):
     alamat = models.TextField(null=True)
     jenis_kelamin = models.CharField(null=True, max_length=50)
     no_hp = models.BigIntegerField(null=True)
-    ttl = models.CharField(max_length=100, null=True)
+    ttl = models.DateField(null=True)
     agama = models.CharField(max_length=100, null=True)
     status = models.CharField(max_length=100, null=True)
     pekerjaan = models.CharField(max_length=100, null=True)
@@ -47,6 +47,10 @@ class Laporan(models.Model):
         choices=ACTIVE_CHOICES, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    id_kepala = models.ForeignKey(
+        User, on_delete=models.DO_NOTHING, null=True, related_name="id_kepala_id")
+    id_petugas = models.ForeignKey(
+        User, on_delete=models.DO_NOTHING, null=True, related_name="id_petugas_id")
 
     def __str__(self):
         return self.jenis_surat + ' (' + self.id_user.first_name + ' ' + self.id_user.last_name + ')'

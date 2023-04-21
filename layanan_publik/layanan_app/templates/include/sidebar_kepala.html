@@ -18,6 +18,18 @@
                             <i class="mdi mdi-playlist-check mr-2"></i>List Surat Selesai
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {% if url_name == 'index' %}active{% endif %}" href="{% url 'data_user' %}">
+                            <i class="mdi mdi-account-multiple-outline mr-2"></i>Data Penduduk
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {% if url_name == 'index' %}active{% endif %}" href="{% url 'report' %}">
+                            <i class="mdi mdi-printer mr-2"></i>Report Laporan
+                        </a>
+                    </li>
                     {% endwith %}
                 </ul>
             </div>

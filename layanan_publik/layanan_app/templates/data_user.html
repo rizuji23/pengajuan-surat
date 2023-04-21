@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% load custom_tags %}
+
+{% block pagecontent %}
+
+<div id="layout-wrapper">
+    {% include 'include/navbar.html' %}
+    {% if data.role == 1 %}
+    {% include 'include/sidebar_penduduk.html' %}
+    {% elif data.role == 2 %}
+    {% include 'include/sidebar_petugas.html' %}
+    {% elif data.role == 3 %}
+    {% include 'include/sidebar_kepala.html' %}
+    {% endif %}
+    
+
+    <div class="main-content">
+        <div class="page-content">
+            <div class="container-fluid">
+
+                {% if messages %}
+                    {% for message in messages %}
+                    <div{% if message.tags != 'error' %} class="alert alert-{{ message.tags }}" {% else %} class="alert alert-danger" {% endif %}>{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="d-flex">
+                                    <div class="align-self-center">
+                                        <h4 class="header-title mb-4">Data User</h4>
+                                    </div>
+                                    <div class="ml-auto bd-highlight">
+                                        <a href="/add_user" class="btn btn-primary btn-sm">Tambah Penduduk</a>
+                                    </div>
+                                </div>
+                                <!-- <p class="card-title-desc">DataTables has most features enabled by
+                                    default, so all you need to do to use it with your own tables is to call
+                                    the construction function: <code>$().DataTable();</code>.
+                                </p> -->
+
+                                <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Nama</th>
+                                            <th>NIK</th>
+                                            <th>Jenis Kelamin</th>
+                                            <th>No Hp</th>
+                                            <th>Email</th>
+                                            <th>Opsi</th>
+                                        </tr>
+                                    </thead>
+
+
+                                    <tbody>
+                                        {% for l in user %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ l.first_name }} {{ l.last_name }}</td>
+                                            <td>{{ l.nik }}</td>
+                                            <td>{{ l.jenis_kelamin }}</td>
+                                            <td>{{ l.no_hp }}</td>
+                                            <td>{{ l.email }}</td>
+                                            <td>
+                                                <a href="/detail_user/{{l.id}}" class="btn btn-info btn-sm">Detail</a>
+                                                <a href="/edit_user/{{l.id}}" class="btn btn-success btn-sm">Edit</a>
+                                                <a href="/api/delete_user/{{l.id}}" class="btn btn-danger btn-sm">Delete</a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div> <!-- end col -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}

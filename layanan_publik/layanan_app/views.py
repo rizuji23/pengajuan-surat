@@ -10,6 +10,10 @@ from django.db.models import Count
 from .forms import *
 from django.db.models import Q
 from django.contrib.auth.hashers import make_password
+import datetime
+import qrcode
+from django.conf import settings
+from django.forms.models import model_to_dict
 
 
 def get_id():
@@ -19,14 +23,14 @@ def get_id():
 
 def index(request):
     context = {
-        'title': 'Login'
+        'title': 'Pelayanan & Pengajuan Surat Desa Cileunyi'
     }
-    return render(request, 'login.html', context)
+    return render(request, 'index.html', context)
 
 
 def logins(request):
     context = {
-        'title': 'Home',
+        'title': 'Login',
     }
 
     return render(request, 'login.html', context)
@@ -34,7 +38,7 @@ def logins(request):
 
 def register(request):
     context = {
-        'title': 'Pendaftaran'
+        'title': 'Pendaftaran Penduduk'
     }
     return render(request, 'register.html', context)
 
@@ -58,7 +62,7 @@ def do_register(request):
 
         try:
             user_1 = User(username=username, email=email, password=make_password(password), first_name=first_name, last_name=last_name, nik=nik, jenis_kelamin=jenis_kelamin,
-                                              ttl=ttl, agama=agama, pekerjaan=pekerjaan, status=status, kewarganegaraan=kewarganegaraan, alamat=alamat, no_hp=no_hp, role=1)
+                          ttl=ttl, agama=agama, pekerjaan=pekerjaan, status=status, kewarganegaraan=kewarganegaraan, alamat=alamat, no_hp=no_hp, role=1)
 
             user_1.save()
 
@@ -106,12 +110,14 @@ def nikah_surat(request, id):
     get_user = get_object_or_404(User, username=request.user)
     get_laporan = get_object_or_404(Laporan, id_laporan=id)
     get_data = get_object_or_404(Nikah, id_laporan_id=get_laporan.id)
+    get_kepala = get_object_or_404(User, id=get_laporan.id_kepala_id)
     context = {
         'title': "SURAT KETERANGAN MENIKAH",
         'kode_surat': get_laporan.kode_surat,
         'laporan': get_laporan,
         'data': get_data,
-        'user': get_user
+        'user': get_user,
+        'kepala': get_kepala
     }
     return render(request, 'surat/nikah.html', context)
 
@@ -120,12 +126,15 @@ def surat_kematian(request, id):
     get_user = get_object_or_404(User, username=request.user)
     get_laporan = get_object_or_404(Laporan, id_laporan=id)
     get_data = get_object_or_404(Surat_Kematian, id_laporan_id=get_laporan.id)
+    get_kepala = get_object_or_404(User, id=get_laporan.id_kepala_id)
+
     context = {
         'title': "SURAT KETERANGAN KEMATIAN",
         'kode_surat': get_laporan.kode_surat,
         'laporan': get_laporan,
         'data': get_data,
-        'user': get_user
+        'user': get_user,
+        'kepala': get_kepala
     }
     return render(request, 'surat/surat_kematian.html', context)
 
@@ -134,12 +143,14 @@ def surat_pindah(request, id):
     get_user = get_object_or_404(User, username=request.user)
     get_laporan = get_object_or_404(Laporan, id_laporan=id)
     get_data = get_object_or_404(Surat_Pindah, id_laporan_id=get_laporan.id)
+    get_kepala = get_object_or_404(User, id=get_laporan.id_kepala_id)
     context = {
         'title': "SURAT KETERANGAN PINDAH",
         'kode_surat': get_laporan.kode_surat,
         'laporan': get_laporan,
         'data': get_data,
-        'user': get_user
+        'user': get_user,
+        'kepala': get_kepala
     }
     return render(request, 'surat/surat_pindah.html', context)
 
@@ -148,12 +159,14 @@ def surat_kelahiran(request, id):
     get_user = get_object_or_404(User, username=request.user)
     get_laporan = get_object_or_404(Laporan, id_laporan=id)
     get_data = get_object_or_404(Surat_Kelahiran, id_laporan_id=get_laporan.id)
+    get_kepala = get_object_or_404(User, id=get_laporan.id_kepala_id)
     context = {
         'title': "SURAT KETERANGAN KELAHIRAN",
         'kode_surat': get_laporan.kode_surat,
         'laporan': get_laporan,
         'data': get_data,
-        'user': get_user
+        'user': get_user,
+        'kepala': get_kepala
     }
     return render(request, 'surat/surat_kelahiran.html', context)
 
@@ -162,12 +175,14 @@ def skck(request, id):
     get_user = get_object_or_404(User, username=request.user)
     get_laporan = get_object_or_404(Laporan, id_laporan=id)
     get_data = get_object_or_404(Skck, id_laporan_id=get_laporan.id)
+    get_kepala = get_object_or_404(User, id=get_laporan.id_kepala_id)
     context = {
         'title': "SURAT KETERANGAN CATATAN KEPOLISIAN",
         'kode_surat': get_laporan.kode_surat,
         'laporan': get_laporan,
         'data': get_data,
-        'user': get_user
+        'user': get_user,
+        'kepala': get_kepala
     }
     return render(request, 'surat/skck.html', context)
 
@@ -176,12 +191,14 @@ def sku(request, id):
     get_user = get_object_or_404(User, username=request.user)
     get_laporan = get_object_or_404(Laporan, id_laporan=id)
     get_data = get_object_or_404(Sku, id_laporan_id=get_laporan.id)
+    get_kepala = get_object_or_404(User, id=get_laporan.id_kepala_id)
     context = {
         'title': "SURAT KETERANGAN USAHA",
         'kode_surat': get_laporan.kode_surat,
         'laporan': get_laporan,
         'data': get_data,
-        'user': get_user
+        'user': get_user,
+        'get_kepala': get_kepala
     }
     return render(request, 'surat/sku.html', context)
 
@@ -190,12 +207,14 @@ def sktm_kes(request, id):
     get_user = get_object_or_404(User, username=request.user)
     get_laporan = get_object_or_404(Laporan, id_laporan=id)
     get_data = get_object_or_404(Sktm_Kes, id_laporan_id=get_laporan.id)
+    get_kepala = get_object_or_404(User, id=get_laporan.id_kepala_id)
     context = {
         'title': "SURAT KETERANGAN TIDAK MAMPU",
         'kode_surat': get_laporan.kode_surat,
         'laporan': get_laporan,
         'data': get_data,
-        'user': get_user
+        'user': get_user,
+        'kepala': get_kepala
     }
     return render(request, 'surat/sktm_kes.html', context)
 
@@ -204,12 +223,14 @@ def sktm_pend(request, id):
     get_user = get_object_or_404(User, username=request.user)
     get_laporan = get_object_or_404(Laporan, id_laporan=id)
     get_data = get_object_or_404(Sktm_Pend, id_laporan_id=get_laporan.id)
+    get_kepala = get_object_or_404(User, id=get_laporan.id_kepala_id)
     context = {
         'title': "SURAT KETERANGAN TIDAK MAMPU",
         'kode_surat': get_laporan.kode_surat,
         'laporan': get_laporan,
         'data': get_data,
-        'user': get_user
+        'user': get_user,
+        'kepala': get_kepala
     }
     return render(request, 'surat/sktm_pend.html', context)
 
@@ -218,12 +239,14 @@ def domisili(request, id):
     get_user = get_object_or_404(User, username=request.user)
     get_laporan = get_object_or_404(Laporan, id_laporan=id)
     get_data = get_object_or_404(Domisili, id_laporan_id=get_laporan.id)
+    get_kepala = get_object_or_404(User, id=get_laporan.id_kepala_id)
     context = {
         'title': "SURAT KETERANGAN DOMISILI",
         'kode_surat': get_laporan.kode_surat,
         'laporan': get_laporan,
         'data': get_data,
-        'user': get_user
+        'user': get_user,
+        'kepala': get_kepala
     }
     return render(request, 'surat/domisili.html', context)
 
@@ -232,12 +255,14 @@ def beda_nama(request, id):
     get_user = get_object_or_404(User, username=request.user)
     get_laporan = get_object_or_404(Laporan, id_laporan=id)
     get_data = get_object_or_404(Beda_Nama, id_laporan_id=get_laporan.id)
+    get_kepala = get_object_or_404(User, id=get_laporan.id_kepala_id)
     context = {
         'title': "SURAT KETERANGAN BEDA NAMA",
         'kode_surat': get_laporan.kode_surat,
         'laporan': get_laporan,
         'data': get_data,
-        'user': get_user
+        'user': get_user,
+        'kepala': get_kepala
     }
     return render(request, 'surat/beda_nama.html', context)
 
@@ -298,7 +323,7 @@ def dashboard_kepala(request):
     count_done = Laporan.objects.filter(is_active=1).count()
 
     context = {
-        'title': 'Dashboard Petugas',
+        'title': 'Dashboard Kepala',
         'data': get_detail,
         'laporan': get_laporan,
         'count_all': count_all,
@@ -330,48 +355,135 @@ def list_surat_selesai(request):
     return render(request, 'list_surat_selesai.html', context)
 
 
+def get_detail_form(type_laporan, **kwargs):
+    if type_laporan == 'nikah':
+        instance = Nikah.objects.get(**kwargs)
+        return NikahForm(instance=instance)
+    elif type_laporan == 'surat_kelahiran':
+        instance = Surat_Kelahiran.objects.get(**kwargs)
+        return Surat_KelahiranForm(instance=instance)
+    elif type_laporan == 'surat_pindah':
+        instance = Surat_Pindah.objects.get(**kwargs)
+        return Surat_PindahForm(instance=instance)
+    elif type_laporan == 'skck':
+        instance = Skck.objects.get(**kwargs)
+        return SkckForm(instance=instance)
+    elif type_laporan == 'sku':
+        instance = Sku.objects.get(**kwargs)
+        return SkuForm(instance=instance)
+    elif type_laporan == 'sktm_kes':
+        instance = Sktm_Kes.objects.get(**kwargs)
+        return Sktm_KesForm(instance=instance)
+    elif type_laporan == 'sktm_pend':
+        instance = Sktm_Pend.objects.get(**kwargs)
+        return Sktm_PendForm(instance=instance)
+    elif type_laporan == 'domisili':
+        instance = Domisili.objects.get(**kwargs)
+        return DomisiliForm(instance=instance)
+    elif type_laporan == 'beda_nama':
+        instance = Beda_Nama.objects.get(**kwargs)
+        return Beda_NamaForm(instance=instance)
+    elif type_laporan == 'surat_kematian':
+        instance = Surat_Kematian.objects.get(**kwargs)
+        return Surat_KematianForm(instance=instance)
+
+
+@login_required
+def download_report(request):
+    if request.method == "POST":
+        filter_laporan = request.POST['filter']
+
+        if filter_laporan == "0":
+            hari_ini = datetime.datetime.now().date()
+            laporan = Laporan.objects.filter(created_at__date=hari_ini)
+            count_setuju = Laporan.objects.filter(
+                created_at__date=hari_ini, is_active=1).count()
+            count_tolak = Laporan.objects.filter(
+                created_at__date=hari_ini, is_active=3).count()
+            context = {
+                'data': laporan,
+                'date': hari_ini,
+                'count_setuju': count_setuju,
+                'count_tolak': count_tolak
+            }
+
+            return render(request, 'download_report.html', context)
+
+        elif filter_laporan == "1":
+            start_date = request.POST['start_date']
+            end_date = request.POST['end_date']
+            laporan = Laporan.objects.filter(
+                created_at__range=(start_date, end_date))
+            count_setuju = Laporan.objects.filter(
+                created_at__range=(start_date, end_date), is_active=1).count()
+            count_tolak = Laporan.objects.filter(
+                created_at__range=(start_date, end_date), is_active=3).count()
+            context = {
+                'data': laporan,
+                'date': "{} ~ {}".format(start_date, end_date),
+                'count_setuju': count_setuju,
+                'count_tolak': count_tolak
+            }
+
+            return render(request, 'download_report.html', context)
+
+        else:
+            return HttpResponse('error invalid')
+    else:
+        return HttpResponseForbidden()
+
+
+@login_required
+def data_user(request):
+    get_detail = get_object_or_404(
+        User, Q(role=2) | Q(role=3), username=request.user)
+    user = User.objects.filter(
+        Q(is_active=1), Q(role=1)).order_by('-id')
+
+    count_all = User.objects.filter(
+        Q(is_active=1), Q(role=1)).count()
+
+    context = {
+        'title': 'Dashboard Petugas',
+        'data': get_detail,
+        'user': user,
+        'count_all': count_all,
+
+    }
+
+    return render(request, 'data_user.html', context)
+
+
+@login_required
+def delete_user(request, id):
+    get_detail = get_object_or_404(
+        User, Q(role=2) | Q(role=3), username=request.user)
+    get_user = User.objects.get(id=id)
+    get_user.delete()
+
+    messages.add_message(request, messages.SUCCESS,
+                         "Penduduk berhasil dihapus.")
+    return HttpResponseRedirect('/data_user')
+
+
 @login_required
 def add_pengajuan(request):
-    get_detail = get_object_or_404(User, username=request.user, role=1)
+    get_detail = get_object_or_404(User, username=request.user)
+    get_penduduk = User.objects.filter(role=1)
     context = {
         'title': 'Tambah Pengajuan Surat',
-        'data': get_detail
+        'data': get_detail,
+        'penduduk': get_penduduk,
     }
 
     return render(request, 'add_pengajuan.html', context)
 
 
-def get_detail_form(type_laporan, id):
-    if type_laporan == 'nikah':
-        instance = Nikah.objects.get(id_laporan_id=id)
-        return NikahForm(instance=instance)
-    elif type_laporan == 'surat_kelahiran':
-        instance = Surat_Kelahiran.objects.get(id_laporan_id=id)
-        return Surat_KelahiranForm(instance=instance)
-    elif type_laporan == 'surat_pindah':
-        instance = Surat_Pindah.objects.get(id_laporan_id=id)
-        return Surat_PindahForm(instance=instance)
-    elif type_laporan == 'skck':
-        instance = Skck.objects.get(id_laporan_id=id)
-        return SkckForm(instance=instance)
-    elif type_laporan == 'sku':
-        instance = Sku.objects.get(id_laporan_id=id)
-        return SkuForm(instance=instance)
-    elif type_laporan == 'sktm_kes':
-        instance = Sktm_Kes.objects.get(id_laporan_id=id)
-        return Sktm_KesForm(instance=instance)
-    elif type_laporan == 'sktm_pend':
-        instance = Sktm_Pend.objects.get(id_laporan_id=id)
-        return Sktm_PendForm(instance=instance)
-    elif type_laporan == 'domisili':
-        instance = Domisili.objects.get(id_laporan_id=id)
-        return DomisiliForm(instance=instance)
-    elif type_laporan == 'beda_nama':
-        instance = Beda_Nama.objects.get(id_laporan_id=id)
-        return Beda_NamaForm(instance=instance)
-    elif type_laporan == 'surat_kematian':
-        instance = Surat_Kematian.objects.get(id_laporan_id=id)
-        return Surat_KematianForm(instance=instance)
+@login_required
+def get_user(request):
+    id = request.GET['id']
+    get_penduduk = get_object_or_404(User, id=id)
+    return JsonResponse({'status': True, 'data': model_to_dict(get_penduduk)})
 
 
 @login_required
@@ -379,7 +491,8 @@ def detail_pengajuan(request, id):
     get_detail = get_object_or_404(User, username=request.user)
     get_laporan = Laporan.objects.get(id_laporan=id)
     form = SuratForm(instance=get_laporan)
-    detail_form = get_detail_form(get_laporan.jenis_surat, get_laporan.id)
+    detail_form = get_detail_form(
+        get_laporan.jenis_surat, id_laporan_id=get_laporan.id)
     context = {
         'title': 'Tambah Pengajuan Surat',
         'data': get_detail,
@@ -389,6 +502,130 @@ def detail_pengajuan(request, id):
     }
 
     return render(request, 'detail_pengajuan.html', context)
+
+
+@login_required
+def detail_user(request, id):
+    get_detail = get_object_or_404(
+        User, Q(role=2) | Q(role=3), username=request.user)
+    get_laporan = User.objects.get(id=id)
+    form = UserDetailForm(instance=get_laporan)
+    context = {
+        'title': 'Detail User',
+        'data': get_detail,
+        'form': form,
+    }
+
+    return render(request, 'detail_user.html', context)
+
+
+@login_required
+def add_user(request):
+    get_detail = get_object_or_404(
+        User, Q(role=2) | Q(role=3), username=request.user)
+    form = UserForm()
+    context = {
+        'title': 'Tambah Data User',
+        'data': get_detail,
+        'form': form,
+    }
+
+    return render(request, 'add_user.html', context)
+
+
+@login_required
+def report(request):
+    get_detail = get_object_or_404(
+        User, Q(role=2) | Q(role=3), username=request.user)
+    context = {
+        'title': 'Report Laporan',
+        'data': get_detail,
+    }
+
+    return render(request, 'report.html', context)
+
+
+@login_required
+def edit_user(request, id):
+    get_detail = get_object_or_404(
+        User, Q(role=2) | Q(role=3), username=request.user)
+    get_user = get_object_or_404(User, id=id)
+    form = UserForm(instance=get_user)
+    context = {
+        'title': 'Edit Data User',
+        'data': get_detail,
+        'form': form,
+        'id': id
+    }
+
+    return render(request, 'edit_user.html', context)
+
+
+@login_required
+def do_add_user(request):
+    get_object_or_404(
+        User, Q(role=2) | Q(role=3), username=request.user)
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            try:
+                form.instance.role = 1
+                form.instance.password = make_password(form.password)
+                form.save()
+            except Exception as e:
+                messages.add_message(request, messages.ERROR,
+                                     "Error: " + str(e))
+                return HttpResponseRedirect('/data_user')
+
+            messages.add_message(request, messages.SUCCESS,
+                                 "Penduduk berhasil ditambah.")
+            return HttpResponseRedirect('/data_user')
+        else:
+            messages.add_message(request, messages.ERROR,
+                                 "Penduduk gagal ditambah.")
+            return HttpResponseRedirect('/data_user')
+
+    else:
+        return HttpResponseForbidden()
+
+
+@login_required
+def do_edit_user(request, id):
+    get_object_or_404(
+        User, Q(role=2) | Q(role=3), username=request.user)
+    if request.method == 'POST':
+        get_user = get_object_or_404(User, id=id)
+        form = UserForm(request.POST or None, instance=get_user)
+        if form.is_valid():
+            try:
+                form.fields.pop('password')
+                form.save()
+            except Exception as e:
+                messages.add_message(request, messages.ERROR,
+                                     "Error: " + str(e))
+                return HttpResponseRedirect('/data_user')
+
+            messages.add_message(request, messages.SUCCESS,
+                                 "Penduduk berhasil ditambah.")
+            return HttpResponseRedirect('/data_user')
+        else:
+            messages.add_message(request, messages.ERROR,
+                                 "Penduduk gagal ditambah.")
+            return HttpResponseRedirect('/data_user')
+
+    else:
+        return HttpResponseForbidden()
+
+
+def qr_generate(id_laporan):
+    url = "http://localhost:8000/verify/{}".format(id_laporan)
+    img = qrcode.make(url)
+    img_name = "qr_{}.png".format(id_laporan)
+    try:
+        img.save(settings.MEDIA_ROOT + '/' + img_name)
+        return True
+    except Exception as e:
+        return e
 
 
 @login_required
@@ -411,12 +648,15 @@ def acc_surat(request):
                                      "Terjadi kesalahan " + str(e))
                 return JsonResponse({'status': False, 'data': str(e)})
         else:
-            try:
-                change.is_active = 1
-                change.save()
-                return JsonResponse({'status': True, 'data': "created"})
-            except Exception as e:
-                return JsonResponse({'status': False, 'data': str(e)})
+            qr = qr_generate(id_laporan)
+            if qr:
+                try:
+                    change.is_active = 1
+                    change.id_kepala_id = get_detail.id
+                    change.save()
+                    return JsonResponse({'status': True, 'data': "created"})
+                except Exception as e:
+                    return JsonResponse({'status': False, 'data': str(e)})
     else:
         return HttpResponseForbidden()
 
@@ -461,13 +701,22 @@ def get_code_surat():
     last_data = Laporan.objects.last()
     return "511.1/0{}/Ekbang".format(int(last_data.id) + 1)
 
+def verify(request, id):
+    get_laporan = get_object_or_404(Laporan, id_laporan=id)
+
+    context = {
+        'data': get_laporan,
+    }
+
+    return render(request, 'verify.html', context)
+
 
 @login_required
 def save_nikah(request):
     if request.method == "POST":
         print(request.POST)
-        get_detail = get_object_or_404(User, username=request.user)
         nik = request.POST['nik']
+        get_detail = get_object_or_404(User, nik=nik)
         mempelai_pria = request.POST['mempelai_pria']
         mempelai_wanita = request.POST['mempelai_wanita']
         nama_wali = request.POST['nama_wali']
@@ -499,9 +748,18 @@ def save_nikah(request):
                           mempelai_pria=mempelai_pria, mempelai_wanita=mempelai_wanita, nama_wali=nama_wali, surat_rt_rw=surat_rt_rw, ktp=ktp, kk=kk, akta_lahir=akta_lahir, ijazah=ijazah, foto_pas_1=foto_pas_1, foto_pas_2=foto_pas_2, surat_belum_nikah=surat_belum_nikah, surat_persetujuan=surat_persetujuan)
             nikah.save()
 
-            messages.add_message(request, messages.SUCCESS,
-                                 "Pengajuan Surat berhasil.")
-            return HttpResponseRedirect('penduduk/dashboard')
+            if request.user.role == 1:
+                messages.add_message(request, messages.SUCCESS,
+                                     "Pengajuan Surat berhasil.")
+                return HttpResponseRedirect('penduduk/dashboard')
+            elif request.user.role == 2:
+                messages.add_message(
+                    request, messages.SUCCESS, "Pengajuan Surat berhasil.")
+                return HttpResponseRedirect('petugas/dashboard')
+            elif request.user.role == 3:
+                messages.add_message(
+                    request, messages.SUCCESS, "Pengajuan Surat berhasil.")
+                return HttpResponseRedirect('kepala/dashboard')
 
         except Exception as e:
             messages.add_message(request, messages.ERROR,
@@ -516,8 +774,8 @@ def save_nikah(request):
 def save_surat_kelahiran(request):
     if request.method == "POST":
         print(request.POST)
-        get_detail = get_object_or_404(User, username=request.user)
         nik = request.POST['nik']
+        get_detail = get_object_or_404(User, nik=nik)
         nama_bayi = request.POST['nama_bayi']
         tanggal_lahir = request.POST['tanggal_lahir']
         jenis_kelamin_anak = request.POST['jenis_kelamin_anak']
@@ -548,9 +806,18 @@ def save_surat_kelahiran(request):
                                             nama_bayi=nama_bayi, ttl=tanggal_lahir, jenis_kelamin_anak=jenis_kelamin_anak, hari_jam_lahir=hari_jam_lahir, anak_ke=anak_ke, nama_ayah=nama_ayah, nama_ibu=nama_ibu, surat_rt_rw=surat_rt_rw, surat_dokter=surat_dokter, kk=kk, ktp=ktp)
             child_laporan.save()
 
-            messages.add_message(request, messages.SUCCESS,
-                                 "Pengajuan Surat berhasil.")
-            return HttpResponseRedirect('penduduk/dashboard')
+            if request.user.role == 1:
+                messages.add_message(request, messages.SUCCESS,
+                                     "Pengajuan Surat berhasil.")
+                return HttpResponseRedirect('penduduk/dashboard')
+            elif request.user.role == 2:
+                messages.add_message(
+                    request, messages.SUCCESS, "Pengajuan Surat berhasil.")
+                return HttpResponseRedirect('petugas/dashboard')
+            elif request.user.role == 3:
+                messages.add_message(
+                    request, messages.SUCCESS, "Pengajuan Surat berhasil.")
+                return HttpResponseRedirect('kepala/dashboard')
 
         except Exception as e:
             messages.add_message(request, messages.ERROR,
@@ -565,8 +832,8 @@ def save_surat_kelahiran(request):
 def save_surat_pindah(request):
     if request.method == "POST":
         print(request.POST)
-        get_detail = get_object_or_404(User, username=request.user)
         nik = request.POST['nik']
+        get_detail = get_object_or_404(User, nik=nik)
         alamat_asal = request.POST['alamat_asal']
         pindah_ke = request.POST['pindah_ke']
         pengikut = request.POST['pengikut']
@@ -594,9 +861,18 @@ def save_surat_pindah(request):
                                          alamat_asal=alamat_asal, pindah_ke=pindah_ke, pengikut=pengikut, keterangan=keterangan, surat_rt_rw=surat_rt_rw, kk=kk, ktp=ktp, pas_foto=pas_foto)
             child_laporan.save()
 
-            messages.add_message(request, messages.SUCCESS,
-                                 "Pengajuan Surat berhasil.")
-            return HttpResponseRedirect('penduduk/dashboard')
+            if request.user.role == 1:
+                messages.add_message(request, messages.SUCCESS,
+                                     "Pengajuan Surat berhasil.")
+                return HttpResponseRedirect('penduduk/dashboard')
+            elif request.user.role == 2:
+                messages.add_message(
+                    request, messages.SUCCESS, "Pengajuan Surat berhasil.")
+                return HttpResponseRedirect('petugas/dashboard')
+            elif request.user.role == 3:
+                messages.add_message(
+                    request, messages.SUCCESS, "Pengajuan Surat berhasil.")
+                return HttpResponseRedirect('kepala/dashboard')
 
         except Exception as e:
             messages.add_message(request, messages.ERROR,
@@ -611,8 +887,8 @@ def save_surat_pindah(request):
 def save_skck(request):
     if request.method == "POST":
         print(request.POST)
-        get_detail = get_object_or_404(User, username=request.user)
         nik = request.POST['nik']
+        get_detail = get_object_or_404(User, nik=nik)
         keperluan = request.POST['keperluan']
         keterangan = request.POST['keterangan']
         jenis_surat = request.POST['jenis_surat']
@@ -638,9 +914,18 @@ def save_skck(request):
                                  keterangan=keterangan, keperluan=keperluan, sim=sim, kk=kk, akta=akta, pas_foto=pas_foto)
             child_laporan.save()
 
-            messages.add_message(request, messages.SUCCESS,
-                                 "Pengajuan Surat berhasil.")
-            return HttpResponseRedirect('penduduk/dashboard')
+            if request.user.role == 1:
+                messages.add_message(request, messages.SUCCESS,
+                                     "Pengajuan Surat berhasil.")
+                return HttpResponseRedirect('penduduk/dashboard')
+            elif request.user.role == 2:
+                messages.add_message(
+                    request, messages.SUCCESS, "Pengajuan Surat berhasil.")
+                return HttpResponseRedirect('petugas/dashboard')
+            elif request.user.role == 3:
+                messages.add_message(
+                    request, messages.SUCCESS, "Pengajuan Surat berhasil.")
+                return HttpResponseRedirect('kepala/dashboard')
 
         except Exception as e:
             messages.add_message(request, messages.ERROR,
@@ -655,8 +940,8 @@ def save_skck(request):
 def save_sku(request):
     if request.method == "POST":
         print(request.POST)
-        get_detail = get_object_or_404(User, username=request.user)
         nik = request.POST['nik']
+        get_detail = get_object_or_404(User, nik=nik)
         nama_usaha = request.POST['nama_usaha']
         jenis_usaha = request.POST['jenis_usaha']
         alamat_usaha = request.POST['alamat_usaha']
@@ -684,9 +969,18 @@ def save_sku(request):
                                 nama_usaha=nama_usaha, jenis_usaha=jenis_usaha, alamat_usaha=alamat_usaha, keterangan=keterangan, surat_pengantar=surat_pengantar, kk=kk, ktp=ktp, pas_foto=pas_foto)
             child_laporan.save()
 
-            messages.add_message(request, messages.SUCCESS,
-                                 "Pengajuan Surat berhasil.")
-            return HttpResponseRedirect('penduduk/dashboard')
+            if request.user.role == 1:
+                messages.add_message(request, messages.SUCCESS,
+                                     "Pengajuan Surat berhasil.")
+                return HttpResponseRedirect('penduduk/dashboard')
+            elif request.user.role == 2:
+                messages.add_message(
+                    request, messages.SUCCESS, "Pengajuan Surat berhasil.")
+                return HttpResponseRedirect('petugas/dashboard')
+            elif request.user.role == 3:
+                messages.add_message(
+                    request, messages.SUCCESS, "Pengajuan Surat berhasil.")
+                return HttpResponseRedirect('kepala/dashboard')
 
         except Exception as e:
             messages.add_message(request, messages.ERROR,
@@ -701,8 +995,8 @@ def save_sku(request):
 def save_sktm_kes(request):
     if request.method == "POST":
         print(request.POST)
-        get_detail = get_object_or_404(User, username=request.user)
         nik = request.POST['nik']
+        get_detail = get_object_or_404(User, nik=nik)
         nama_anggota_keluarga = request.POST['nama_anggota_keluarga']
         hubungan = request.POST['hubungan']
         keterangan = request.POST['keterangan']
@@ -728,9 +1022,18 @@ def save_sktm_kes(request):
                                      nama_anggota_keluarga=nama_anggota_keluarga, hubungan=hubungan, keterangan=keterangan, surat_pengantar=surat_pengantar, ktp=ktp, kk=kk)
             child_laporan.save()
 
-            messages.add_message(request, messages.SUCCESS,
-                                 "Pengajuan Surat berhasil.")
-            return HttpResponseRedirect('penduduk/dashboard')
+            if request.user.role == 1:
+                messages.add_message(request, messages.SUCCESS,
+                                     "Pengajuan Surat berhasil.")
+                return HttpResponseRedirect('penduduk/dashboard')
+            elif request.user.role == 2:
+                messages.add_message(
+                    request, messages.SUCCESS, "Pengajuan Surat berhasil.")
+                return HttpResponseRedirect('petugas/dashboard')
+            elif request.user.role == 3:
+                messages.add_message(
+                    request, messages.SUCCESS, "Pengajuan Surat berhasil.")
+                return HttpResponseRedirect('kepala/dashboard')
 
         except Exception as e:
             messages.add_message(request, messages.ERROR,
@@ -745,8 +1048,8 @@ def save_sktm_kes(request):
 def save_sktm_pend(request):
     if request.method == "POST":
         print(request.POST)
-        get_detail = get_object_or_404(User, username=request.user)
         nik = request.POST['nik']
+        get_detail = get_object_or_404(User, nik=nik)
         nama_tanggungan = request.POST['nama_tanggungan']
         jml_tanggungan = request.POST['jml_tanggungan']
         hubungan_tanggungan = request.POST['hubungan_tanggungan']
@@ -773,9 +1076,18 @@ def save_sktm_pend(request):
                                       nama_tanggungan=nama_tanggungan, jml_tanggungan=jml_tanggungan, hubungan_tanggungan=hubungan_tanggungan, keterangan=keterangan, surat_pengantar=surat_pengantar, ktp=ktp, kk=kk)
             child_laporan.save()
 
-            messages.add_message(request, messages.SUCCESS,
-                                 "Pengajuan Surat berhasil.")
-            return HttpResponseRedirect('penduduk/dashboard')
+            if request.user.role == 1:
+                messages.add_message(request, messages.SUCCESS,
+                                     "Pengajuan Surat berhasil.")
+                return HttpResponseRedirect('penduduk/dashboard')
+            elif request.user.role == 2:
+                messages.add_message(
+                    request, messages.SUCCESS, "Pengajuan Surat berhasil.")
+                return HttpResponseRedirect('petugas/dashboard')
+            elif request.user.role == 3:
+                messages.add_message(
+                    request, messages.SUCCESS, "Pengajuan Surat berhasil.")
+                return HttpResponseRedirect('kepala/dashboard')
 
         except Exception as e:
             messages.add_message(request, messages.ERROR,
@@ -790,8 +1102,8 @@ def save_sktm_pend(request):
 def save_domisili(request):
     if request.method == "POST":
         print(request.POST)
-        get_detail = get_object_or_404(User, username=request.user)
         nik = request.POST['nik']
+        get_detail = get_object_or_404(User, nik=nik)
         keterangan = request.POST['keterangan']
         masa_berlaku = request.POST['masa_berlaku']
         jenis_surat = request.POST['jenis_surat']
@@ -817,9 +1129,18 @@ def save_domisili(request):
                                      keterangan=keterangan, masa_berlaku=masa_berlaku, kk=kk, ktp=ktp, pas_foto=pas_foto)
             child_laporan.save()
 
-            messages.add_message(request, messages.SUCCESS,
-                                 "Pengajuan Surat berhasil.")
-            return HttpResponseRedirect('penduduk/dashboard')
+            if request.user.role == 1:
+                messages.add_message(request, messages.SUCCESS,
+                                     "Pengajuan Surat berhasil.")
+                return HttpResponseRedirect('penduduk/dashboard')
+            elif request.user.role == 2:
+                messages.add_message(
+                    request, messages.SUCCESS, "Pengajuan Surat berhasil.")
+                return HttpResponseRedirect('petugas/dashboard')
+            elif request.user.role == 3:
+                messages.add_message(
+                    request, messages.SUCCESS, "Pengajuan Surat berhasil.")
+                return HttpResponseRedirect('kepala/dashboard')
 
         except Exception as e:
             messages.add_message(request, messages.ERROR,
@@ -834,8 +1155,8 @@ def save_domisili(request):
 def save_beda_nama(request):
     if request.method == "POST":
         print(request.POST)
-        get_detail = get_object_or_404(User, username=request.user)
         nik = request.POST['nik']
+        get_detail = get_object_or_404(User, nik=nik)
         dokumen_keliru = request.FILES['dokumen_keliru']
         dokumen_benar = request.FILES['dokumen_benar']
         keterangan = request.POST['keterangan']
@@ -863,9 +1184,18 @@ def save_beda_nama(request):
                                       dokumen_keliru=dokumen_keliru, dokumen_benar=dokumen_benar, keterangan=keterangan, surat_pengantar=surat_pengantar, ktp=ktp, kk=kk, dokumen_pembeda=dokumen_pembeda, surat_pernyataan=surat_pernyataan)
             child_laporan.save()
 
-            messages.add_message(request, messages.SUCCESS,
-                                 "Pengajuan Surat berhasil.")
-            return HttpResponseRedirect('penduduk/dashboard')
+            if request.user.role == 1:
+                messages.add_message(request, messages.SUCCESS,
+                                     "Pengajuan Surat berhasil.")
+                return HttpResponseRedirect('penduduk/dashboard')
+            elif request.user.role == 2:
+                messages.add_message(
+                    request, messages.SUCCESS, "Pengajuan Surat berhasil.")
+                return HttpResponseRedirect('petugas/dashboard')
+            elif request.user.role == 3:
+                messages.add_message(
+                    request, messages.SUCCESS, "Pengajuan Surat berhasil.")
+                return HttpResponseRedirect('kepala/dashboard')
 
         except Exception as e:
             messages.add_message(request, messages.ERROR,
@@ -880,8 +1210,8 @@ def save_beda_nama(request):
 def save_surat_kematian(request):
     if request.method == "POST":
         print(request.POST)
-        get_detail = get_object_or_404(User, username=request.user)
         nik = request.POST['nik']
+        get_detail = get_object_or_404(User, nik=nik)
         nama_wafat = request.POST['nama_wafat']
         penyebab = request.POST['penyebab']
         hari_tanggal_wafat = request.POST['hari_tanggal_wafat']
@@ -910,9 +1240,18 @@ def save_surat_kematian(request):
                                            nama_wafat=nama_wafat, penyebab=penyebab, hari_tanggal_wafat=hari_tanggal_wafat, pelapor=pelapor, hubungan_pelapor=hubungan_pelapor, surat_keterangan=surat_keterangan, ktp_kk=ktp_kk, ktp_pasangan=ktp_pasangan, ktp_kk_pelapor=ktp_kk_pelapor)
             child_laporan.save()
 
-            messages.add_message(request, messages.SUCCESS,
-                                 "Pengajuan Surat berhasil.")
-            return HttpResponseRedirect('penduduk/dashboard')
+            if request.user.role == 1:
+                messages.add_message(request, messages.SUCCESS,
+                                     "Pengajuan Surat berhasil.")
+                return HttpResponseRedirect('penduduk/dashboard')
+            elif request.user.role == 2:
+                messages.add_message(
+                    request, messages.SUCCESS, "Pengajuan Surat berhasil.")
+                return HttpResponseRedirect('petugas/dashboard')
+            elif request.user.role == 3:
+                messages.add_message(
+                    request, messages.SUCCESS, "Pengajuan Surat berhasil.")
+                return HttpResponseRedirect('kepala/dashboard')
 
         except Exception as e:
             messages.add_message(request, messages.ERROR,

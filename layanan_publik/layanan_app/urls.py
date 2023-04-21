@@ -45,6 +45,25 @@ urlpatterns = [
     path('list_done', views.list_surat_selesai,
          name="list_done"),
 
+    path('data_user', views.data_user,
+         name="data_user"),
+
+    path('detail_user/<str:id>', views.detail_user, name="detail_user"),
+
+    path('add_user', views.add_user, name="add_user"),
+
+    path('do_add_user', views.do_add_user, name="do_add_user"),
+
+    path('edit_user/<str:id>', views.edit_user, name="edit_user"),
+
+    path('do_edit_user/<str:id>', views.do_edit_user, name="do_edit_user"),
+
+    path('report', views.report, name="report"),
+
+    path('download_report', views.download_report, name="download_report"),
+
+    path('api/delete_user/<str:id>', views.delete_user, name="delete_user"),
+
     path('kepala/dashboard', views.dashboard_kepala, name="dashboard_kepala"),
 
     path('download/surat', views.surat, name="surat"),
@@ -69,4 +88,7 @@ urlpatterns = [
     path('download/surat/beda_nama/<str:id>',
          views.beda_nama, name="beda_nama"),
 
+    path('api/get_user', views.get_user, name="get_user"),
+
+    path('verify/<str:id>', views.verify, name="verify"),
 ]

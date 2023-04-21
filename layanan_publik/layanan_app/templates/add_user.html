@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block pagecontent %}
+<div id="layout-wrapper">
+    {% include 'include/navbar.html' %}
+    {% if data.role == 1 %}
+    {% include 'include/sidebar_penduduk.html' %}
+    {% elif data.role == 2 %}
+    {% include 'include/sidebar_petugas.html' %}
+    {% elif data.role == 3 %}
+    {% include 'include/sidebar_kepala.html' %}
+    {% endif %}
+
+    <div class="main-content">
+        <div class="page-content">
+            <div class="container-fluid">
+                
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="d-flex">
+                            <div class="mr-3">
+                                <a href="/data_user" class="btn btn-primary btn-sm">< Kembali</a>
+                            </div>
+                            <div class="align-self-center">
+                                <h4 class="mb-0 font-size-18">Tambah Data Penduduk</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <form action="/do_add_user" method="POST">
+                            <div class="form-detail">
+                                <h4 class="header-title">Informasi User</h4>
+                                {% csrf_token %}
+                                    {{ form }}
+                            </div>
+                            <div class="mt-3 text-right">
+                                <button class="btn btn-primary" type="submit">Tambah</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

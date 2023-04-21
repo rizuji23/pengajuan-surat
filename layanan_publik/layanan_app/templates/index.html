@@ -1,0 +1,551 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{{ title }}</title>
+  {% include 'include/css_landing.html' %}
+
+</head>
+<body id="body" data-spy="scroll" data-target=".navbar" data-offset="100">
+  <header id="header-section">
+    <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
+    <div class="container">
+      <div class="navbar-brand-wrapper d-flex">
+        <img src="{% static 'assets/images/surat_logo.png' %}" width="90" alt="">
+        <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="mdi mdi-menu navbar-toggler-icon"></span>
+        </button> 
+      </div>
+      <div class="collapse navbar-collapse navbar-menu-wrapper" id="navbarSupportedContent">
+        <ul class="navbar-nav align-items-lg-center align-items-start ml-auto">
+          <li class="d-flex align-items-center justify-content-between pl-4 pl-lg-0">
+            <div class="navbar-collapse-logo">
+              <img src="{% static 'assets/images/surat_logo.png' %}"  width="90" alt="">
+            </div>
+            <button class="navbar-toggler close-button" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="mdi mdi-close navbar-toggler-icon pl-5"></span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#header-section">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#sejarah">Sejarah</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#visi_misi">Visi & Misi</a>  
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#layanan">Layanan</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#struktur">Struktur</a>  
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#galeri">Galeri</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#peta">Peta</a>
+          </li>
+          <li class="nav-item btn-contact-us pl-4 pl-lg-0">
+            <a class="btn btn-info" href="/login">Registrasi Penduduk</a>
+          </li>
+        </ul>
+      </div>
+    </div> 
+    </nav>   
+  </header>
+  <div class="banner" >
+    <div class="container">
+      <h1 class="font-weight-semibold mb-4">Pelayanan & Pengajuan Surat <br> Desa Cileunyi.</h1>
+      <h6 class="font-weight-normal text-muted pb-4">Simple is a simple template with a creative design that solves all your marketing and SEO queries.</h6>
+      <div>
+        <a href="/login" class="btn btn-opacity-light mr-1">Registrasi Penduduk</a>
+        <a href="#layanan" class="btn btn-opacity-success ml-1">Layanan</a>
+      </div>
+      <img src="{% static 'landing/images/Group171.svg' %}" alt="" class="img-fluid">
+    </div>
+  </div>
+  <div class="content-wrapper">
+    <div class="container">
+      <section class="features-overview" id="sejarah" >
+        <div class="content-header">
+          <h2>Sejarah</h2>
+          <!-- <h6 class="section-subtitle text-muted">One theme that serves as an easy-to-use operational toolkit<br>that meets customer's needs.</h6> -->
+        </div>
+        <p style="line-height: 30px;" class="text-muted font-weight-medium">&emsp;Desa Cileunyi Wetan Sudah ada sejak Abad 18 dimana awal Desa Bernama Desa Cileunyi , Sesepuh Desa pada waktu itu sangat berperan dalam perjuangan rakyat melawan Kolonialisme Belanda, Peran Sesepuh Desa bersama Sesepuh Pesantren Sindangsari sangatlah berperan dalam membangun Wilayah Desa didalam segala bidang.
+        <br>
+        Pada Awalnya Desa Cileunyi Wetan masuk Wilayah Kecamatan Ujungberung, namun sejak keluar PP Nomor 16 tahun 1987, 1 April 1989 Desa Cileunyi Wetan merupakan bagian Wilayah Kecamatan Cileunyi. 
+        <br>
+        Demikian selanyang pandang atau sejarah singkat Desa Cileunyi Wetan yang dapat kami sampaikan kepada para pegiat Medsos, semoga dapat bermanfaat untuk kita semua, terima kasih.</p>
+      </section>     
+      <section class="digital-marketing-service" id="visi_misi">
+        <div class="row align-items-center">
+          <div class="col-12 col-lg-7 grid-margin grid-margin-lg-0" data-aos="fade-right">
+            <h3 class="m-0">Visi</h3>
+            <div class="col-lg-7 col-xl-6 p-0">
+              <p class="py-4 m-0 font-weight-medium text-muted">"Mewujudkan Desa Cileunyi Wetan yang Maju, Mandiri dan Sejahtera Melalui Pembangunan Partisipatif Yang Berakhlakul Karimah"</p>
+            </div>    
+          </div>
+          <div class="col-12 col-lg-5 p-0 img-digital grid-margin grid-margin-lg-0" data-aos="fade-left">
+            <img src="{% static 'landing/images/Group1.png' %}" alt="" class="img-fluid">
+          </div>
+        </div>
+        <div class="row align-items-center">
+          <div class="col-12 col-lg-7 text-center flex-item grid-margin" data-aos="fade-right">
+            <img src="{% static 'landing/images/Group2.png' %}" alt="" class="img-fluid">
+          </div>
+          <div class="col-12 col-lg-5 flex-item grid-margin" data-aos="fade-left">
+            <h3 class="mt-5">Misi</h3>
+            <div class="mt-3">
+                <ul>
+                    <li>
+                        <p class="text-muted font-weight-medium">Meningkatkan Kinerja Pemerintahan dan tata pemerintah yang baik, bersih, terbuka, profesional, bertanggungjawab Serta Amanah dan Perluasan Partisipasi Publik.</p>
+                    </li>
+                    <li>
+                        <p class="text-muted font-weight-medium">Meningkatkan kualitas sumber daya manusia yang berdaya saing dalam pembangunan desa yang berkelanjutan.</p>
+                    </li>
+                    <li>
+                        <p class="text-muted font-weight-medium">Mewujudkan sistem dan kelembagaan perekonomian yang kokoh dan berkeadilan serta Penyediaan Prasarana dasar yang memadai.</p>
+                    </li>
+                    <li>
+                        <p class="text-muted font-weight-medium">Meningkatkan sumber sumber pendanaan pemerintahan dan Pembangunan Desa.</p>
+                    </li>
+                    <li>
+                        <p class="text-muted font-weight-medium">Menciptakan rasa aman dan tentram dalam suasana kehidupan masyarakat desa yang demokrasi dan agamis.</p>
+                    </li>
+                    <li>
+                        <p class="text-muted font-weight-medium">Menggali dan Menumbuh kembangkan Budaya Sunda serta meningkatkan kehidupan sosial, seni, budaya, peran pemuda dan olahraga serta pengembangan pariwisata berlandaskan kearifan lokal.</p>
+                    </li>
+                </ul>
+            </div>
+          </div>
+        </div>
+      </section>     
+      <section class="case-studies" id="layanan">
+        <div class="row grid-margin">
+          <div class="col-12 text-center pb-5">
+            <h2>Layanan</h2>
+            <h6 class="section-subtitle text-muted">Lorem ipsum dolor sit amet, tincidunt vestibulum.</h6>
+          </div>
+          <div class="col-12 col-md-6 col-lg-3 stretch-card mb-3 mb-lg-0 mt-3" data-aos="zoom-in">
+            <div class="card color-cards">
+              <div class="card-body p-0">
+                <div class="bg-primary text-center card-contents">
+                  <div class="card-image">
+                    <img src="{% static 'landing/images/Group95.svg' %}" class="case-studies-card-img" alt="">
+                  </div>  
+                  <div class="card-desc-box d-flex align-items-center justify-content-around">
+                    <!-- <div>
+                      <h6 class="text-white pb-2 px-3">Know more about Online marketing</h6>
+                      <button class="btn btn-white">Read More</button>
+                    </div> -->
+                  </div>
+                </div>   
+                <div class="card-details text-center pt-4">
+                    <h6 class="m-0 pb-1">Surat Nikah</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-3 stretch-card mb-3 mb-lg-0 mt-3" data-aos="zoom-in" data-aos-delay="200">
+            <div class="card color-cards">
+              <div class="card-body p-0">
+                <div class="bg-warning text-center card-contents">
+                  <div class="card-image">
+                      <img src="{% static 'landing/images/Group108.svg' %}" class="case-studies-card-img" alt="">
+                  </div>  
+                  <div class="card-desc-box d-flex align-items-center justify-content-around">
+                    <!-- <div>
+                      <h6 class="text-white pb-2 px-3">Know more about Web Development</h6>
+                      <button class="btn btn-white">Read More</button>
+                    </div> -->
+                  </div>
+                </div>   
+                <div class="card-details text-center pt-4">
+                    <h6 class="m-0 pb-1">Surat Kelahiran</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-3 stretch-card mb-3 mb-lg-0 mt-3" data-aos="zoom-in" data-aos-delay="400">
+            <div class="card color-cards">
+              <div class="card-body p-0">
+                <div class="bg-violet text-center card-contents">
+                  <div class="card-image">
+                      <img src="{% static 'landing/images/Group126.svg' %}" class="case-studies-card-img" alt="">
+                  </div>  
+                  <div class="card-desc-box d-flex align-items-center justify-content-around">
+                    <!-- <div>
+                      <h6 class="text-white pb-2 px-3">Know more about Web Designing</h6>
+                      <button class="btn btn-white">Read More</button>
+                    </div> -->
+                  </div>
+                </div>   
+                <div class="card-details text-center pt-4">
+                    <h6 class="m-0 pb-1">Surat Pindah</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-3 stretch-card mt-3" data-aos="zoom-in" data-aos-delay="600">
+            <div class="card color-cards">
+              <div class="card-body p-0">
+                <div class="bg-info text-center card-contents">
+                  <div class="card-image">
+                      <img src="{% static 'landing/images/Group115.svg' %}" class="case-studies-card-img" alt="">
+                  </div>  
+                  <div class="card-desc-box d-flex align-items-center justify-content-around">
+                    <!-- <div>
+                      <h6 class="text-white pb-2 px-3">Know more about Software Development</h6>
+                      <button class="btn btn-white">Read More</button>
+                    </div> -->
+                  </div>
+                </div>   
+                <div class="card-details text-center pt-4">
+                    <h6 class="m-0 pb-1">SKCK</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-3 stretch-card mt-3" data-aos="zoom-in" data-aos-delay="600">
+            <div class="card color-cards">
+              <div class="card-body p-0">
+                <div class="bg-success text-center card-contents">
+                  <div class="card-image">
+                      <img src="{% static 'landing/images/Group115.svg' %}" class="case-studies-card-img" alt="">
+                  </div>  
+                  <div class="card-desc-box d-flex align-items-center justify-content-around">
+                    <!-- <div>
+                      <h6 class="text-white pb-2 px-3">Know more about Software Development</h6>
+                      <button class="btn btn-white">Read More</button>
+                    </div> -->
+                  </div>
+                </div>   
+                <div class="card-details text-center pt-4">
+                    <h6 class="m-0 pb-1">SKU</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-3 stretch-card mt-3" data-aos="zoom-in" data-aos-delay="600">
+            <div class="card color-cards">
+              <div class="card-body p-0">
+                <div class="bg-danger text-center card-contents">
+                  <div class="card-image">
+                      <img src="{% static 'landing/images/Group115.svg' %}" class="case-studies-card-img" alt="">
+                  </div>  
+                  <div class="card-desc-box d-flex align-items-center justify-content-around">
+                    <!-- <div>
+                      <h6 class="text-white pb-2 px-3">Know more about Software Development</h6>
+                      <button class="btn btn-white">Read More</button>
+                    </div> -->
+                  </div>
+                </div>   
+                <div class="card-details text-center pt-4">
+                    <h6 class="m-0 pb-1">SKTM Kes</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-3 stretch-card mt-3" data-aos="zoom-in" data-aos-delay="600">
+            <div class="card color-cards">
+              <div class="card-body p-0">
+                <div class="bg-warning text-center card-contents">
+                  <div class="card-image">
+                      <img src="{% static 'landing/images/Group115.svg' %}" class="case-studies-card-img" alt="">
+                  </div>  
+                  <div class="card-desc-box d-flex align-items-center justify-content-around">
+                    <!-- <div>
+                      <h6 class="text-white pb-2 px-3">Know more about Software Development</h6>
+                      <button class="btn btn-white">Read More</button>
+                    </div> -->
+                  </div>
+                </div>   
+                <div class="card-details text-center pt-4">
+                    <h6 class="m-0 pb-1">SKTM Pend</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-3 stretch-card mt-3" data-aos="zoom-in" data-aos-delay="600">
+            <div class="card color-cards">
+              <div class="card-body p-0">
+                <div class="bg-violet text-center card-contents">
+                  <div class="card-image">
+                      <img src="{% static 'landing/images/Group115.svg' %}" class="case-studies-card-img" alt="">
+                  </div>  
+                  <div class="card-desc-box d-flex align-items-center justify-content-around">
+                    <!-- <div>
+                      <h6 class="text-white pb-2 px-3">Know more about Software Development</h6>
+                      <button class="btn btn-white">Read More</button>
+                    </div> -->
+                  </div>
+                </div>   
+                <div class="card-details text-center pt-4">
+                    <h6 class="m-0 pb-1">Domisili</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-3 stretch-card mt-3" data-aos="zoom-in" data-aos-delay="600">
+            <div class="card color-cards">
+              <div class="card-body p-0">
+                <div class="bg-success text-center card-contents">
+                  <div class="card-image">
+                      <img src="{% static 'landing/images/Group115.svg' %}" class="case-studies-card-img" alt="">
+                  </div>  
+                  <div class="card-desc-box d-flex align-items-center justify-content-around">
+                    <!-- <div>
+                      <h6 class="text-white pb-2 px-3">Know more about Software Development</h6>
+                      <button class="btn btn-white">Read More</button>
+                    </div> -->
+                  </div>
+                </div>   
+                <div class="card-details text-center pt-4">
+                    <h6 class="m-0 pb-1">Beda Nama</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-3 stretch-card mt-3" data-aos="zoom-in" data-aos-delay="600">
+            <div class="card color-cards">
+              <div class="card-body p-0">
+                <div class="bg-primary text-center card-contents">
+                  <div class="card-image">
+                      <img src="{% static 'landing/images/Group115.svg' %}" class="case-studies-card-img" alt="">
+                  </div>  
+                  <div class="card-desc-box d-flex align-items-center justify-content-around">
+                    <!-- <div>
+                      <h6 class="text-white pb-2 px-3">Know more about Software Development</h6>
+                      <button class="btn btn-white">Read More</button>
+                    </div> -->
+                  </div>
+                </div>   
+                <div class="card-details text-center pt-4">
+                    <h6 class="m-0 pb-1">Surat Kematian</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="struktur" class="customer-feedback mb-5">
+        <div class="row">
+            <div class="col-12 text-center pb-5">
+              <h2>Struktur</h2>
+              <h6 class="section-subtitle text-muted m-0">Susunan Organisasi Pemerintah Desa Cileunyi Wetan.</h6>
+            </div>
+        </div>
+        <div class="text-center">
+            <img src="{% static 'assets/images/struktur.png' %}" class="img-fluid" alt="">
+        </div>
+      </section>
+
+      <section class="customer-feedback" id="galeri">
+        <div class="row">
+          <div class="col-12 text-center pb-5">
+            <h2>Galeri</h2>
+            <h6 class="section-subtitle text-muted m-0">Lorem ipsum dolor sit amet, tincidunt vestibulum.</h6>
+          </div>
+          <div class="owl-carousel owl-theme grid-margin">
+              <div class="card customer-cards">
+                <div class="card-body">
+                  <div class="text-center">
+                    <img src="{% static 'landing/images/face2.jpg' %}" width="89" height="89" alt="" class="img-customer">
+                    <p class="m-0 py-3 text-muted">Lorem ipsum dolor sit amet, tincidunt vestibulum. Fusce egeabus consectetuer turpis, suspendisse.</p>
+                    <div class="content-divider m-auto"></div>
+                    <h6 class="card-title pt-3">Tony Martinez</h6>
+                    <h6 class="customer-designation text-muted m-0">Marketing Manager</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="card customer-cards">
+                <div class="card-body">
+                  <div class="text-center">
+                    <img src="{% static 'landing/images/face3.jpg' %}" width="89" height="89" alt="" class="img-customer">
+                    <p class="m-0 py-3 text-muted">Lorem ipsum dolor sit amet, tincidunt vestibulum. Fusce egeabus consectetuer turpis, suspendisse.</p>
+                    <div class="content-divider m-auto"></div>
+                    <h6 class="card-title pt-3">Sophia Armstrong</h6>
+                    <h6 class="customer-designation text-muted m-0">Marketing Manager</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="card customer-cards">
+                <div class="card-body">
+                  <div class="text-center">
+                    <img src="{% static 'landing/images/face20.jpg' %}" width="89" height="89" alt="" class="img-customer">
+                    <p class="m-0 py-3 text-muted">Lorem ipsum dolor sit amet, tincidunt vestibulum. Fusce egeabus consectetuer turpis, suspendisse.</p>
+                    <div class="content-divider m-auto"></div>
+                    <h6 class="card-title pt-3">Cody Lambert</h6>
+                    <h6 class="customer-designation text-muted m-0">Marketing Manager</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="card customer-cards">
+                <div class="card-body">
+                  <div class="text-center">
+                    <img src="{% static 'landing/images/face15.jpg' %}" width="89" height="89" alt="" class="img-customer">
+                    <p class="m-0 py-3 text-muted">Lorem ipsum dolor sit amet, tincidunt vestibulum. Fusce egeabus consectetuer turpis, suspendisse.</p>
+                    <div class="content-divider m-auto"></div>
+                    <h6 class="card-title pt-3">Cody Lambert</h6>
+                    <h6 class="customer-designation text-muted m-0">Marketing Manager</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="card customer-cards">
+                <div class="card-body">
+                  <div class="text-center">
+                    <img src="{% static 'landing/images/face16.jpg' %}" width="89" height="89" alt="" class="img-customer">
+                    <p class="m-0 py-3 text-muted">Lorem ipsum dolor sit amet, tincidunt vestibulum. Fusce egeabus consectetuer turpis, suspendisse.</p>
+                    <div class="content-divider m-auto"></div>
+                    <h6 class="card-title pt-3">Cody Lambert</h6>
+                    <h6 class="customer-designation text-muted m-0">Marketing Manager</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="card customer-cards">
+                <div class="card-body">
+                  <div class="text-center">
+                    <img src="{% static 'landing/images/face1.jpg' %}" width="89" height="89" alt="" class="img-customer">
+                    <p class="m-0 py-3 text-muted">Lorem ipsum dolor sit amet, tincidunt vestibulum. Fusce egeabus consectetuer turpis, suspendisse.</p>
+                    <div class="content-divider m-auto"></div>
+                    <h6 class="card-title pt-3">Tony Martinez</h6>
+                    <h6 class="customer-designation text-muted m-0">Marketing Manager</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="card customer-cards">
+                <div class="card-body">
+                  <div class="text-center">
+                    <img src="{% static 'landing/images/face2.jpg' %}" width="89" height="89" alt="" class="img-customer">
+                    <p class="m-0 py-3 text-muted">Lorem ipsum dolor sit amet, tincidunt vestibulum. Fusce egeabus consectetuer turpis, suspendisse.</p>
+                    <div class="content-divider m-auto"></div>
+                    <h6 class="card-title pt-3">Tony Martinez</h6>
+                    <h6 class="customer-designation text-muted m-0">Marketing Manager</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="card customer-cards">
+                <div class="card-body">
+                  <div class="text-center">
+                    <img src="{% static 'landing/images/face3.jpg' %}" width="89" height="89" alt="" class="img-customer">
+                    <p class="m-0 py-3 text-muted">Lorem ipsum dolor sit amet, tincidunt vestibulum. Fusce egeabus consectetuer turpis, suspendisse.</p>
+                    <div class="content-divider m-auto"></div>
+                    <h6 class="card-title pt-3">Sophia Armstrong</h6>
+                    <h6 class="customer-designation text-muted m-0">Marketing Manager</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="card customer-cards">
+                <div class="card-body">
+                  <div class="text-center">
+                    <img src="{% static 'landing/images/face20.jpg' %}" width="89" height="89" alt="" class="img-customer">
+                    <p class="m-0 py-3 text-muted">Lorem ipsum dolor sit amet, tincidunt vestibulum. Fusce egeabus consectetuer turpis, suspendisse.</p>
+                    <div class="content-divider m-auto"></div>
+                    <h6 class="card-title pt-3">Cody Lambert</h6>
+                    <h6 class="customer-designation text-muted m-0">Marketing Manager</h6>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </section>
+      <section class="contact-us mb-5" id="peta">
+        <!-- <div class="contact-us-bgimage grid-margin" >
+          <div class="pb-4">
+            <h4 class="px-3 px-md-0 m-0" data-aos="fade-down">Do you have any projects?</h4>
+            <h4 class="pt-1" data-aos="fade-down">Contact us</h4>
+          </div>
+          <div data-aos="fade-up">
+            <button class="btn btn-rounded btn-outline-danger">Contact us</button>
+          </div>          
+        </div> -->
+        <div class="row">
+            <div class="col-12 text-center pb-5">
+              <h2>Galeri</h2>
+              <h6 class="section-subtitle text-muted m-0">Lorem ipsum dolor sit amet, tincidunt vestibulum.</h6>
+            </div>
+            <div>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.5974384837587!2d107.75031911137299!3d-6.938620667895316!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68c35ca3887dc3%3A0x548a534e345313a3!2sJl.%20Raya%20Cileunyi%20No.445%2C%20RW.08%2C%20Cileunyi%20Wetan%2C%20Kec.%20Cileunyi%2C%20Kabupaten%20Bandung%2C%20Jawa%20Barat%2040622!5e0!3m2!1sid!2sid!4v1682043074396!5m2!1sid!2sid" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+      </section>
+      <section class="contact-details" id="contact-details-section">
+        <div class="row text-center text-md-left">
+          <div class="col-12 col-md-6 col-lg-3 grid-margin">
+            <img src="{% static 'assets/images/surat_logo.png' %}"  width="90" alt="">
+            <div class="pt-2">
+              <p class="text-muted m-0">mikayla_beer@feil.name</p>
+              <p class="text-muted m-0">906-179-8309</p>
+            </div>         
+          </div>
+          <div class="col-12 col-md-6 col-lg-3 grid-margin">
+            <h5 class="pb-2">Get in Touch</h5>
+            <p class="text-muted">Don’t miss any updates of our new templates and extensions.!</p>
+            <form>
+              <input type="text" class="form-control" id="Email" placeholder="Email id">
+            </form>
+            <div class="pt-3">
+              <button class="btn btn-dark">Subscribe</button>
+            </div>   
+          </div>
+          <div class="col-12 col-md-6 col-lg-3 grid-margin">
+            <h5 class="pb-2">Our Guidelines</h5>
+            <a href="#"><p class="m-0 pb-2">Terms</p></a>   
+            <a href="#" ><p class="m-0 pt-1 pb-2">Privacy policy</p></a> 
+            <a href="#"><p class="m-0 pt-1 pb-2">Cookie Policy</p></a> 
+            <a href="#"><p class="m-0 pt-1">Discover</p></a> 
+          </div>
+          <div class="col-12 col-md-6 col-lg-3 grid-margin">
+              <h5 class="pb-2">Our address</h5>
+              <p class="text-muted">518 Schmeler Neck<br>Bartlett. Illinois</p>
+              <div class="d-flex justify-content-center justify-content-md-start">
+                <a href="#"><span class="mdi mdi-facebook"></span></a>
+                <a href="#"><span class="mdi mdi-twitter"></span></a>
+                <a href="#"><span class="mdi mdi-instagram"></span></a>
+                <a href="#"><span class="mdi mdi-linkedin"></span></a>
+              </div>
+          </div>
+        </div>  
+      </section>
+      <footer class="border-top">
+        <p class="text-center text-muted pt-4">Copyright © 2019<a href="https://www.bootstrapdash.com/" class="px-1">Bootstrapdash.</a>All rights reserved.</p>
+      </footer>
+      <!-- Modal for Contact - us Button -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="exampleModalLabel">Contact Us</h4>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="Name">Name</label>
+                  <input type="text" class="form-control" id="Name" placeholder="Name">
+                </div>
+                <div class="form-group">
+                  <label for="Email">Email</label>
+                  <input type="email" class="form-control" id="Email-1" placeholder="Email">
+                </div>
+                <div class="form-group">
+                  <label for="Message">Message</label>
+                  <textarea class="form-control" id="Message" placeholder="Enter your Message"></textarea>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-success">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> 
+  </div>
+  
+  {% include 'include/js_landing.html' %}
+</body>
+</html>

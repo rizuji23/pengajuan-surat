@@ -650,6 +650,42 @@ $(document).ready(() => {
         $("#content-form-surat").html(content)
     });
 
+    $("#filter_report").change((e) => {
+        const values = $("#filter_report").val();
+        console.log(values)
+        var data = "";
+        switch (values) {
+            case "0":
+                data = `
+                    <input type="text" hidden value="today"/>
+                `
+                break;
+            case "1":
+                data = `
+                    <div class="form-group">
+                        <label for="">Dari Tanggal</label>
+                        <input type="date" class="form-control" name="start_date"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Sampai Tanggal</label>
+                        <input type="date" class="form-control" name="end_date"/>
+                    </div>
+                `;
+                break;
+            case '2':
+                data = `
+                <div class="form-group">
+                    <label for="">Sampai Tanggal</label>
+                    <input type="month" class="form-control" name="bulan"/>
+                </div>
+                `
+                break;
+        }
+        $("#filter_box").html(data)
+        
+    })
+
     function getCookie(name) {
         var cookieValue = null;
         if (document.cookie && document.cookie !== "") {
@@ -774,6 +810,29 @@ $(document).ready(() => {
                 })
             }
           })
-    })
+    });
+
+    $('.js-example-basic-single').select2();
+
+    $(".js-example-basic-single").change((e) => {
+        const values = e.target.value;
+        console.log(values);
+
+        $.ajax({
+            url: 'http://localhost:8000/api/get_user',
+            method: "GET",
+            data: {
+                'id': values,
+            },
+            success: (data) => {
+                console.log(data);
+                if (data.status === true) {
+                    console.log(data.data.nik)
+                    $("#nik").val(data.data.nik)
+                    $("#nama_pengaju").val(data.data.first_name + ' ' + data.data.last_name)
+                }
+            }
+        })
+    });
 
 });
