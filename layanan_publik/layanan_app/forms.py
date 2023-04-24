@@ -48,15 +48,12 @@ class UserForm(ModelAllClassMixin, forms.ModelForm):
     email = forms.CharField(max_length=100, widget=forms.EmailInput)
     no_hp = forms.CharField(max_length=100, widget=forms.NumberInput)
     alamat = forms.CharField(widget=forms.Textarea)
-
     username = forms.CharField(max_length=100)
-    password = forms.CharField(
-        max_length=100, widget=forms.PasswordInput, required=False)
 
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'nik', 'jenis_kelamin', 'ttl',
-                  'pekerjaan', 'status', 'agama', 'email', 'no_hp', 'alamat', 'username', 'password')
+                  'pekerjaan', 'status', 'agama', 'email', 'no_hp', 'alamat', 'username')
 
 
 class SuratForm(ModelAllDisabledFormMixin, forms.ModelForm):

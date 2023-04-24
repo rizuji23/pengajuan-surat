@@ -58,6 +58,17 @@ class Laporan(models.Model):
     def get_nik(self):
         return self.id_user.nik
 
+class Change_Password(models.Model):
+    id = models.AutoField(primary_key=True)
+    id_change_password = models.CharField(max_length=100)
+    id_user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    otp = models.CharField(max_length=50)
+    email = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.email
 
 class Nikah(models.Model):
     id = models.AutoField(primary_key=True)
