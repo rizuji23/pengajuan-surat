@@ -17,6 +17,25 @@ from django.forms.models import model_to_dict
 
 from django.core.mail import send_mail
 from django.conf import settings
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from io import BytesIO
+from django.template.loader import render_to_string
+from django.template import Context
+import pdfkit
+
+
+def render_to_pdf(template_src, context_dict):
+    template = get_template(template_src)
+    context = Context(context_dict)
+    html = template.render(context)
+    result = BytesIO()
+
+    pdf = pisa.pisaDocument(BytesIO(
+        html.encode("ISO-8859-1")), result)
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), content_type='application/pdf')
+    return HttpResponse('We had some errors<pre>%s</pre>' % html)
 
 
 def get_id():
@@ -116,6 +135,40 @@ def surat(request):
     return render(request, 'surat.html')
 
 
+def download_pdf(template, context, laporan):
+    options = {
+        'page-size': 'A4',
+        'page-height': "13in",
+        'page-width': "10in",
+        'margin-top': '0in',
+        'margin-right': '0in',
+        'margin-bottom': '0in',
+        'margin-left': '0in',
+        'encoding': "UTF-8",
+        'no-outline': None,
+        "enable-local-file-access": ""
+    }
+
+    template = get_template(template)
+
+    html = template.render(context)
+
+    print(html)
+    config = pdfkit.configuration(
+        wkhtmltopdf=r"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe")
+
+    pdf = pdfkit.from_string(
+        html, False, configuration=config, options=options)
+
+    response = HttpResponse(pdf, content_type='application/pdf')
+    file_name = "surat_download_{}_{}.pdf".format(
+        laporan.id_user.nik, laporan.jenis_surat)
+    response['Content-Disposition'] = 'attachment; filename="'+file_name+'"'
+    if response.status_code != 200:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+
 def nikah_surat(request, id):
     get_user = get_object_or_404(User, username=request.user)
     get_laporan = get_object_or_404(Laporan, id_laporan=id)
@@ -124,12 +177,14 @@ def nikah_surat(request, id):
     context = {
         'title': "SURAT KETERANGAN MENIKAH",
         'kode_surat': get_laporan.kode_surat,
+        'request': request,
         'laporan': get_laporan,
         'data': get_data,
         'user': get_user,
         'kepala': get_kepala
     }
-    return render(request, 'surat/nikah.html', context)
+
+    return download_pdf("surat/nikah.html", context, get_laporan)
 
 
 def surat_kematian(request, id):
@@ -141,12 +196,13 @@ def surat_kematian(request, id):
     context = {
         'title': "SURAT KETERANGAN KEMATIAN",
         'kode_surat': get_laporan.kode_surat,
+        'request': request,
         'laporan': get_laporan,
         'data': get_data,
         'user': get_user,
         'kepala': get_kepala
     }
-    return render(request, 'surat/surat_kematian.html', context)
+    return download_pdf("surat/surat_kematian.html", context, get_laporan)
 
 
 def surat_pindah(request, id):
@@ -157,12 +213,13 @@ def surat_pindah(request, id):
     context = {
         'title': "SURAT KETERANGAN PINDAH",
         'kode_surat': get_laporan.kode_surat,
+        'request': request,
         'laporan': get_laporan,
         'data': get_data,
         'user': get_user,
         'kepala': get_kepala
     }
-    return render(request, 'surat/surat_pindah.html', context)
+    return download_pdf("surat/surat_pindah.html", context, get_laporan)
 
 
 def surat_kelahiran(request, id):
@@ -173,12 +230,13 @@ def surat_kelahiran(request, id):
     context = {
         'title': "SURAT KETERANGAN KELAHIRAN",
         'kode_surat': get_laporan.kode_surat,
+        'request': request,
         'laporan': get_laporan,
         'data': get_data,
         'user': get_user,
         'kepala': get_kepala
     }
-    return render(request, 'surat/surat_kelahiran.html', context)
+    return download_pdf("surat/surat_kelahiran.html", context, get_laporan)
 
 
 def skck(request, id):
@@ -189,12 +247,13 @@ def skck(request, id):
     context = {
         'title': "SURAT KETERANGAN CATATAN KEPOLISIAN",
         'kode_surat': get_laporan.kode_surat,
+        'request': request,
         'laporan': get_laporan,
         'data': get_data,
         'user': get_user,
         'kepala': get_kepala
     }
-    return render(request, 'surat/skck.html', context)
+    return download_pdf("surat/skck.html", context, get_laporan)
 
 
 def sku(request, id):
@@ -205,12 +264,13 @@ def sku(request, id):
     context = {
         'title': "SURAT KETERANGAN USAHA",
         'kode_surat': get_laporan.kode_surat,
+        'request': request,
         'laporan': get_laporan,
         'data': get_data,
         'user': get_user,
         'get_kepala': get_kepala
     }
-    return render(request, 'surat/sku.html', context)
+    return download_pdf("surat/sku.html", context, get_laporan)
 
 
 def sktm_kes(request, id):
@@ -221,12 +281,13 @@ def sktm_kes(request, id):
     context = {
         'title': "SURAT KETERANGAN TIDAK MAMPU",
         'kode_surat': get_laporan.kode_surat,
+        'request': request,
         'laporan': get_laporan,
         'data': get_data,
         'user': get_user,
         'kepala': get_kepala
     }
-    return render(request, 'surat/sktm_kes.html', context)
+    return download_pdf("surat/sktm_kes.html", context, get_laporan)
 
 
 def sktm_pend(request, id):
@@ -237,12 +298,13 @@ def sktm_pend(request, id):
     context = {
         'title': "SURAT KETERANGAN TIDAK MAMPU",
         'kode_surat': get_laporan.kode_surat,
+        'request': request,
         'laporan': get_laporan,
         'data': get_data,
         'user': get_user,
         'kepala': get_kepala
     }
-    return render(request, 'surat/sktm_pend.html', context)
+    return download_pdf("surat/sktm_pend.html", context, get_laporan)
 
 
 def domisili(request, id):
@@ -256,9 +318,12 @@ def domisili(request, id):
         'laporan': get_laporan,
         'data': get_data,
         'user': get_user,
-        'kepala': get_kepala
+        'kepala': get_kepala,
+        'request': request
     }
-    return render(request, 'surat/domisili.html', context)
+
+    return download_pdf("surat/domisili.html", context, get_laporan)
+    # return render(request, 'surat/domisili.html', context)
 
 
 def beda_nama(request, id):
@@ -269,12 +334,13 @@ def beda_nama(request, id):
     context = {
         'title': "SURAT KETERANGAN BEDA NAMA",
         'kode_surat': get_laporan.kode_surat,
+        'request': request,
         'laporan': get_laporan,
         'data': get_data,
         'user': get_user,
         'kepala': get_kepala
     }
-    return render(request, 'surat/beda_nama.html', context)
+    return download_pdf("surat/beda_nama.html", context, get_laporan)
 
 
 @login_required
@@ -658,18 +724,21 @@ def change_password(request, id_change, id_user):
     }
     return render(request, 'change_password.html', context)
 
+
 def send_change_password(request):
     if request.method == "POST":
         id_change = request.POST['id_change']
         password = request.POST['password']
-        check_password = get_object_or_404(Change_Password, id_change_password=id_change)
+        check_password = get_object_or_404(
+            Change_Password, id_change_password=id_change)
         user = User.objects.get(id=check_password.id_user.id)
         user.set_password(password)
         user.save()
-        
+
         messages.add_message(request, messages.SUCCESS,
-                                 "Password berhasil diubah")
+                             "Password berhasil diubah")
         return HttpResponseRedirect('/login')
+
 
 def otp(request, id_change):
     check_email = get_object_or_404(
@@ -791,7 +860,10 @@ def logout_view(request):
 
 def get_code_surat():
     last_data = Laporan.objects.last()
-    return "511.1/0{}/Ekbang".format(int(last_data.id) + 1)
+    if last_data == None:
+        return "511.1/0{}/Ekbang".format(int(0) + 1)
+    else:
+        return "511.1/0{}/Ekbang".format(int(last_data.id) + 1)
 
 
 def verify(request, id):
@@ -829,7 +901,7 @@ def save_nikah(request):
         try:
             kode_surat = get_code_surat()
             laporan = Laporan(id_laporan=id_laporan, kode_surat=kode_surat, jenis_surat=jenis_surat,
-                              id_user_id=get_detail.pk, is_active=0)
+                              id_user_id=get_detail.pk, is_active=0, id_kepala_id=None, id_petugas_id=None)
             laporan.save()
 
             # get laporan
@@ -887,7 +959,7 @@ def save_surat_kelahiran(request):
         try:
             kode_surat = get_code_surat()
             laporan = Laporan(id_laporan=id_laporan, kode_surat=kode_surat, jenis_surat=jenis_surat,
-                              id_user_id=get_detail.pk, is_active=0)
+                              id_user_id=get_detail.pk, is_active=0, id_kepala_id=None, id_petugas_id=None)
             laporan.save()
 
             # get laporan
@@ -942,7 +1014,7 @@ def save_surat_pindah(request):
         try:
             kode_surat = get_code_surat()
             laporan = Laporan(id_laporan=id_laporan, kode_surat=kode_surat, jenis_surat=jenis_surat,
-                              id_user_id=get_detail.pk, is_active=0)
+                              id_user_id=get_detail.pk, is_active=0, id_kepala_id=None, id_petugas_id=None)
             laporan.save()
 
             # get laporan
@@ -995,7 +1067,7 @@ def save_skck(request):
         try:
             kode_surat = get_code_surat()
             laporan = Laporan(id_laporan=id_laporan, kode_surat=kode_surat, jenis_surat=jenis_surat,
-                              id_user_id=get_detail.pk, is_active=0)
+                              id_user_id=get_detail.pk, is_active=0, id_kepala_id=None, id_petugas_id=None)
             laporan.save()
 
             # get laporan
@@ -1050,7 +1122,7 @@ def save_sku(request):
         try:
             kode_surat = get_code_surat()
             laporan = Laporan(id_laporan=id_laporan, kode_surat=kode_surat, jenis_surat=jenis_surat,
-                              id_user_id=get_detail.pk, is_active=0)
+                              id_user_id=get_detail.pk, is_active=0, id_kepala_id=None, id_petugas_id=None)
             laporan.save()
 
             # get laporan
@@ -1103,7 +1175,7 @@ def save_sktm_kes(request):
         try:
             kode_surat = get_code_surat()
             laporan = Laporan(id_laporan=id_laporan, kode_surat=kode_surat, jenis_surat=jenis_surat,
-                              id_user_id=get_detail.pk, is_active=0)
+                              id_user_id=get_detail.pk, is_active=0, id_kepala_id=None, id_petugas_id=None)
             laporan.save()
 
             # get laporan
@@ -1157,7 +1229,7 @@ def save_sktm_pend(request):
         try:
             kode_surat = get_code_surat()
             laporan = Laporan(id_laporan=id_laporan, kode_surat=kode_surat, jenis_surat=jenis_surat,
-                              id_user_id=get_detail.pk, is_active=0)
+                              id_user_id=get_detail.pk, is_active=0, id_kepala_id=None, id_petugas_id=None)
             laporan.save()
 
             # get laporan
@@ -1205,14 +1277,12 @@ def save_domisili(request):
         pas_foto = request.FILES['pas_foto']
 
         id_laporan = get_id()
-
         # save to laporan
         try:
             kode_surat = get_code_surat()
             laporan = Laporan(id_laporan=id_laporan, kode_surat=kode_surat, jenis_surat=jenis_surat,
-                              id_user_id=get_detail.pk, is_active=0)
+                              id_user_id=get_detail.pk, is_active=0, id_kepala_id=None, id_petugas_id=None)
             laporan.save()
-
             # get laporan
             get_laporan = get_object_or_404(Laporan, id_laporan=id_laporan)
 
@@ -1265,7 +1335,7 @@ def save_beda_nama(request):
         try:
             kode_surat = get_code_surat()
             laporan = Laporan(id_laporan=id_laporan, kode_surat=kode_surat, jenis_surat=jenis_surat,
-                              id_user_id=get_detail.pk, is_active=0)
+                              id_user_id=get_detail.pk, is_active=0, id_kepala_id=None, id_petugas_id=None)
             laporan.save()
 
             # get laporan
@@ -1321,7 +1391,7 @@ def save_surat_kematian(request):
         try:
             kode_surat = get_code_surat()
             laporan = Laporan(id_laporan=id_laporan, kode_surat=kode_surat, jenis_surat=jenis_surat,
-                              id_user_id=get_detail.pk, is_active=0)
+                              id_user_id=get_detail.pk, is_active=0, id_kepala_id=None, id_petugas_id=None)
             laporan.save()
 
             # get laporan
@@ -1349,6 +1419,41 @@ def save_surat_kematian(request):
         except Exception as e:
             messages.add_message(request, messages.ERROR,
                                  "Terjadi kesalahan " + str(e))
+            return HttpResponseRedirect('penduduk/dashboard')
+
+    else:
+        return HttpResponseForbidden()
+
+@login_required
+def change_profile(request):
+    get_detail = get_object_or_404(User, username=request.user)
+    form = UserForm(instance=get_detail)
+    context = {
+        "data": get_detail,
+        "form": form
+    }
+
+    return render(request, "ganti_profile.html", context)
+
+@login_required
+def do_change_profile(request):
+    get_detail = get_object_or_404(User, username=request.user)
+    if request.method == 'POST':
+        form = UserForm(request.POST or None, instance=get_detail)
+        if form.is_valid():
+            try:
+                form.save()
+            except Exception as e:
+                messages.add_message(request, messages.ERROR,
+                                     "Error: " + str(e))
+                return HttpResponseRedirect('penduduk/dashboard')
+
+            messages.add_message(request, messages.SUCCESS,
+                                 "Profile berhasil diedit.")
+            return HttpResponseRedirect('penduduk/dashboard')
+        else:
+            messages.add_message(request, messages.ERROR,
+                                 "Profile gagal diedit.")
             return HttpResponseRedirect('penduduk/dashboard')
 
     else:

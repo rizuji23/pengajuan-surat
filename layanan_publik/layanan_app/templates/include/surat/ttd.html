@@ -3,7 +3,7 @@
 <div class="ttd-surat">
     <p>Cileunyi Wetan, {{laporan.updated_at}} <br> Kepala Desa Cileunyi Wetan</p>
     <div class="ttd-img">
-        <img src="/media/qr_{{laporan.id_laporan}}.png" width="150" alt="">
+        <img src="{{ request.scheme }}://{{ request.META.HTTP_HOST }}/media/qr_{{laporan.id_laporan}}.png" width="150" alt="">
     </div>
     <div class="ttd-title">
         <p><b>{{ kepala.first_name }} {{ kepala.last_name }}</b></p>

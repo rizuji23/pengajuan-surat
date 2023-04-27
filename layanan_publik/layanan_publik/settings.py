@@ -85,8 +85,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'layanan_masyarakat',
-        'USER': 'root',
-        'PASSWORD': '',
+        'USER': 'uji',
+        'PASSWORD': 'uji123',
         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
         'PORT': '3306',
     }
@@ -151,3 +151,6 @@ EMAIL_HOST_PASSWORD = 'zrgihagagtwajvaj'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
+PATH_PDF = r"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe"
+PDF_DOWNLOAD_URL = "http://localhost:8000"

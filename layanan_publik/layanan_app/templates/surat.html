@@ -6,7 +6,7 @@
         <meta charset="utf-8" />
         <title>{{ title }} | Surat Layanan Masyarakat</title>
         <link
-            href="{% static 'assets/css/bootstrap.min.css' %}"
+            href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% static 'assets/css/bootstrap.min.css' %}"
             rel="stylesheet"
             type="text/css"
             />
@@ -15,10 +15,7 @@
             body {
                 background: white !important;
             }
-            @font-face {
-                font-family: 'Times';
-                src: url("{% static 'assets/fonts/times.tff' %}");
-            }
+           
 
             page[size="A4"] {
                 background: white;
@@ -29,11 +26,26 @@
                 margin-bottom: 0.5cm;
             }
             
-
+            @page {
+                size: "A4";
+                margin: 1cm;
+                /* @frame footer {
+                    -pdf-frame-content: footerContent;
+                    bottom: 0cm;
+                    margin-left: 9cm;
+                    margin-right: 9cm;
+                    height: 1cm;
+                } */
+            }
 
             .container-custom {
                 padding-left: 100px;
                 padding-right: 100px;
+            }
+
+            .header-title {
+                position: relative;
+                left: -70px;
             }
 
             .header-title h1 {
@@ -123,8 +135,8 @@
         <!-- end Account pages -->
 
         <!-- JAVASCRIPT -->
-        <script>
+        <!-- <script>
             window.print()
-        </script>
+        </script> -->
     </body>
 </html>

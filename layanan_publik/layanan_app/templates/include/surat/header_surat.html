@@ -1,8 +1,8 @@
 {% load static %}
 
 <div class="d-flex">
-    <div class="mr-4">
-        <img src="{% static 'assets/images/surat_logo.png' %}" width="130" alt="">
+    <div class="mr-0">
+        <img src="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% static 'assets/images/surat_logo.png' %}" width="130" alt="">
     </div>
     <div class="header-title align-self-center w-100">
         <h1>PEMERINTAHAN KABUPATEN BANDUNG<br>KECAMATAN CILEUNYI<br>DESA CILEUNYI WETAN NO.2002</h1>

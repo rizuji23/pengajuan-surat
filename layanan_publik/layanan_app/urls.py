@@ -97,4 +97,8 @@ urlpatterns = [
          views.change_password, name="change_password"),
     path('send_change_password', views.send_change_password,
          name="send_change_password"),
+
+    path('change_profile', views.change_profile, name="change_profile"),
+
+    path('do_change_profile', views.do_change_profile, name="do_change_profile")
 ]

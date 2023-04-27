@@ -11,6 +11,12 @@
                             <i class="mdi mdi-storefront mr-2"></i>Dashboard
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {% if url_name == 'index' %}active{% endif %}" href="{% url 'change_profile' %}">
+                            <i class="mdi mdi-account-edit-outline mr-2"></i>Ganti Profile
+                        </a>
+                    </li>
                     {% endwith %}
                 </ul>
             </div>
