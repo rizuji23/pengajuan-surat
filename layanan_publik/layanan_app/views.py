@@ -15,6 +15,9 @@ import qrcode
 from django.conf import settings
 from django.forms.models import model_to_dict
 
+from django.core.mail import send_mail
+from django.conf import settings
+
 
 def get_id():
     return str(uuid.uuid4())[:8]
@@ -41,6 +44,13 @@ def register(request):
         'title': 'Pendaftaran Penduduk'
     }
     return render(request, 'register.html', context)
+
+
+def lupa_password(request):
+    context = {
+        'title': 'Lupa Password',
+    }
+    return render(request, 'lupa_password.html', context)
 
 
 def do_register(request):
@@ -570,7 +580,7 @@ def do_add_user(request):
         if form.is_valid():
             try:
                 form.instance.role = 1
-                form.instance.password = make_password(form.password)
+                form.instance.password = make_password(form.nik)
                 form.save()
             except Exception as e:
                 messages.add_message(request, messages.ERROR,
@@ -589,6 +599,89 @@ def do_add_user(request):
         return HttpResponseForbidden()
 
 
+def send_otp(request):
+    if request.method == "POST":
+        id_change_password = get_id()
+        email = request.POST['email']
+
+        check_email = User.objects.get(email=email)
+
+        try:
+            otp = get_id()
+            otps = Change_Password(id_change_password=id_change_password,
+                                   id_user_id=check_email.id, otp=otp, email=email)
+
+            otps.save()
+
+            send_mail(
+                subject='Lupa Password',
+                message="Kode OTP anda adalah: {}".format(otp),
+                from_email=settings.EMAIL_HOST_USER,
+                recipient_list=[email]
+            )
+
+            messages.add_message(request, messages.SUCCESS,
+                                 "Email sudah dikirim")
+            return HttpResponseRedirect('/otp/{}'.format(id_change_password))
+
+        except User.DoesNotExist:
+            messages.add_message(request, messages.ERROR,
+                                 "Email tidak tersedia.")
+            return HttpResponseRedirect('/lupa_password')
+
+    else:
+        return HttpResponseForbidden()
+
+
+def send_lupa(request):
+    if request.method == 'POST':
+        otp = request.POST['otp']
+        id_change = request.POST['id_change']
+
+        check_change = Change_Password.objects.get(
+            id_change_password=id_change, otp=otp)
+
+        try:
+            return HttpResponseRedirect('/change_password/{}/{}'.format(id_change, check_change.id_user.id))
+        except Change_Password.DoesNotExist:
+            messages.add_message(request, messages.ERROR,
+                                 "OTP tidak tersedia.")
+            return HttpResponseRedirect('/otp/{}'.format(id_change))
+
+
+def change_password(request, id_change, id_user):
+    check_password = get_object_or_404(
+        Change_Password, id_change_password=id_change, id_user_id=id_user)
+    context = {
+        'title': 'Ganti Password',
+        'id_change': id_change
+    }
+    return render(request, 'change_password.html', context)
+
+def send_change_password(request):
+    if request.method == "POST":
+        id_change = request.POST['id_change']
+        password = request.POST['password']
+        check_password = get_object_or_404(Change_Password, id_change_password=id_change)
+        user = User.objects.get(id=check_password.id_user.id)
+        user.set_password(password)
+        user.save()
+        
+        messages.add_message(request, messages.SUCCESS,
+                                 "Password berhasil diubah")
+        return HttpResponseRedirect('/login')
+
+def otp(request, id_change):
+    check_email = get_object_or_404(
+        Change_Password, id_change_password=id_change)
+    context = {
+        'title': 'OTP',
+        'email': check_email.email,
+        'id_change': id_change
+    }
+    return render(request, 'otp.html', context)
+
+
 @login_required
 def do_edit_user(request, id):
     get_object_or_404(
@@ -598,7 +691,6 @@ def do_edit_user(request, id):
         form = UserForm(request.POST or None, instance=get_user)
         if form.is_valid():
             try:
-                form.fields.pop('password')
                 form.save()
             except Exception as e:
                 messages.add_message(request, messages.ERROR,
@@ -700,6 +792,7 @@ def logout_view(request):
 def get_code_surat():
     last_data = Laporan.objects.last()
     return "511.1/0{}/Ekbang".format(int(last_data.id) + 1)
+
 
 def verify(request, id):
     get_laporan = get_object_or_404(Laporan, id_laporan=id)

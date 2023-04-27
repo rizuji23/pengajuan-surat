@@ -87,8 +87,14 @@ urlpatterns = [
          views.domisili, name="domisili"),
     path('download/surat/beda_nama/<str:id>',
          views.beda_nama, name="beda_nama"),
-
     path('api/get_user', views.get_user, name="get_user"),
-
     path('verify/<str:id>', views.verify, name="verify"),
+    path('lupa_password', views.lupa_password, name="lupa_password"),
+    path('otp/<str:id_change>', views.otp, name="otp"),
+    path('send_otp', views.send_otp, name="send_otp"),
+    path('send_lupa', views.send_lupa, name="send_lupa"),
+    path('change_password/<str:id_change>/<str:id_user>',
+         views.change_password, name="change_password"),
+    path('send_change_password', views.send_change_password,
+         name="send_change_password"),
 ]
