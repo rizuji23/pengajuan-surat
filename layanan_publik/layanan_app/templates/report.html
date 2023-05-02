@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block pagecontent %}
+<div id="layout-wrapper">
+    {% include 'include/navbar.html' %}
+    {% if data.role == 1 %}
+    {% include 'include/sidebar_penduduk.html' %}
+    {% elif data.role == 2 %}
+    {% include 'include/sidebar_petugas.html' %}
+    {% elif data.role == 3 %}
+    {% include 'include/sidebar_kepala.html' %}
+    {% endif %}
+
+    <div class="main-content">
+        <div class="page-content">
+            <div class="container-fluid">
+                
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="d-flex">
+                            <div class="align-self-center">
+                                <h4 class="mb-0 font-size-18">Report Laporan</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-detail">
+                            <form action="/download_report" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="">Filter</label>
+                                    <select name="filter" class="form-control" id="filter_report">
+                                        <option value="">Pilih Filter</option>
+                                        <option value="0">Hari Ini</option>
+                                        <option value="1">Tanggal</option>
+                                    </select>
+                                </div>
+
+                                <div id="filter_box">
+                                    
+                                </div>
+
+                                <div class="text-right">
+                                    <button type="submit" class="btn btn-primary">Buat Report</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

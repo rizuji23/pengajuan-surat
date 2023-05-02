@@ -1,0 +1,62 @@
+{% extends 'surat.html' %}
+{% load static %}
+
+{% block surat_content %}
+    <div class="isi-surat">
+        <p>&emsp;Yang bertanda tangan di bawah ini Kepala Desa Kabupaten Bandung Cileunyi, dengan ini menerangkan bahwa:</p>
+        <div class="d-flex">
+            <div>
+                <ul>
+                    <li>NIK</li>
+                    <li>Nama</li>
+                    <li>Jenis Kelamin</li>
+                    <li>Tempat/Tgl. Lahir</li>
+                    <li>Agama</li>
+                    <li>Status</li>
+                    <li>Pekerjaan</li>
+                    <li>Kewarganegaraan</li>
+                    <li>Alamat Asal</li>
+                    <li>Alamat Tujuan Pindah</li>
+                    <li>Alasan Pindah</li>
+                    <li>Pengikut/Keluarga Yang Pindah</li>
+                </ul>
+            </div>
+            <div>
+                <ul>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                </ul>
+            </div>
+
+            <div>
+                <ul>
+                    <li>{{ laporan.id_user.nik }}</li>
+                    <li>{{ laporan.id_user.first_name }} {{ laporan.id_user.last_name }}</li>
+                    <li>{{ laporan.id_user.jenis_kelamin }}</li>
+                    <li>{{ laporan.id_user.ttl }}</li>
+                    <li>{{ laporan.id_user.agama }}</li>
+                    <li>{{ laporan.id_user.status }}</li>
+                    <li>{{ laporan.id_user.pekerjaan }}</li>
+                    <li>{{ laporan.id_user.kewarganegaraan }}</li>
+                    <li>{{ data.alamat_asal }}</li>
+                    <li>{{ data.pindah_ke }}</li>
+                    <li>{{ data.keterangan }}</li>
+                    <li>{{ data.pengikut }}</li>
+                </ul>
+            </div>
+        </div>
+        <p>Demikianlah Surat Keterangan ini kami buat dengan sebenernya untuk dipergunakan sebagaimana mestinya.</p>
+    </div>
+
+    {% include '../include/surat/ttd.html' %}
+{% endblock %}

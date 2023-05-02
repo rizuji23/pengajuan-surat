@@ -1,0 +1,67 @@
+{% extends 'surat.html' %}
+{% load static %}
+
+{% block surat_content %}
+    <div class="isi-surat">
+        <p>&emsp;Yang bertanda tangan di bawah ini Kepala Desa Kabupaten Bandung Cileunyi, dengan ini menerangkan bahwa:</p>
+        <div class="d-flex">
+            <div>
+                <ul>
+                    <li>Nama</li>
+                    <li>Jenis Kelamin</li>
+                    <li>Tempat/Tgl. Lahir</li>
+                    <li>Hari Jam Lahir</li>
+                    <li>Alamat</li>
+                </ul>
+            </div>
+            <div>
+                <ul>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                </ul>
+            </div>
+
+            <div>
+                <ul>
+                    <li>{{ data.nama_bayi }}</li>
+                    <li>{{ data.jenis_kelamin_anak }}</li>
+                    <li>{{ data.ttl }}</li>
+                    <li>{{ data.hari_jam_lahir }}</li>
+                    <li>{{ laporan.id_user.alamat }}</li>
+
+                </ul>
+            </div>
+        </div>
+        <p>Adalah anak dari: </p>
+        <div class="d-flex">
+            <div>
+                <ul>
+                    <li>Nama Ayah Kandung</li>
+                    <li>Nama Ibu Kandung</li>
+                    <li>Anak Ke</li>
+                </ul>
+            </div>
+            <div>
+                <ul>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                </ul>
+            </div>
+
+            <div>
+                <ul>
+                    <li>{{ data.nama_ayah }}</li>
+                    <li>{{ data.nama_ibu }}</li>
+                    <li>{{ data.anak_ke }}</li>
+                </ul>
+            </div>
+        </div>
+        <p>Demikianlah Surat Keterangan ini kami buat dengan sebenernya untuk dipergunakan sebagaimana mestinya.</p>
+    </div>
+
+    {% include '../include/surat/ttd.html' %}
+{% endblock %}

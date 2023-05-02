@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% load custom_tags %}
+
+{% block pagecontent %}
+
+<div id="layout-wrapper">
+    {% include 'include/navbar.html' %}
+    {% include 'include/sidebar_petugas.html' %}
+    
+
+    <div class="main-content">
+        <div class="page-content">
+            <div class="container-fluid">
+
+                {% if messages %}
+                    {% for message in messages %}
+                    <div{% if message.tags != 'error' %} class="alert alert-{{ message.tags }}" {% else %} class="alert alert-danger" {% endif %}>{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+
+
+                <div class="row">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <h5 class="font-size-14">Jumlah Semua Pengajuan Surat.</h5>
+                                    </div>
+                                    <div class="avatar-xs">
+                                        <span class="avatar-title rounded-circle bg-primary">
+                                            <i class="dripicons-box"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <h4 class="m-0 align-self-center">{{count_all}}</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <h5 class="font-size-14">Jumlah Pengajuan Surat yang sedang diajukan.</h5>
+                                    </div>
+                                    <div class="avatar-xs">
+                                        <span class="avatar-title rounded-circle bg-primary">
+                                            <i class="dripicons-box"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <h4 class="m-0 align-self-center">{{count_not}}</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <h5 class="font-size-14">Jumlah Pengajuan Surat yang sudah selesai.</h5>
+                                    </div>
+                                    <div class="avatar-xs">
+                                        <span class="avatar-title rounded-circle bg-primary">
+                                            <i class="dripicons-box"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <h4 class="m-0 align-self-center">{{count_done}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="text-right">
+                            <a href="{% url 'add_pengajuan' %}" class="btn btn-primary">Tambah Pengajuan Surat</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <h4 class="header-title mb-4">List Pengajuan Surat yang sedang diajukan</h4>
+                                <!-- <p class="card-title-desc">DataTables has most features enabled by
+                                    default, so all you need to do to use it with your own tables is to call
+                                    the construction function: <code>$().DataTable();</code>.
+                                </p> -->
+
+                                <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Nama Pengaju</th>
+                                            <th>NIK Pengaju</th>
+                                            <th>Jenis Surat</th>
+                                            <th>Tanggal</th>
+                                            <th>Status</th>
+                                            <th>Opsi</th>
+                                        </tr>
+                                    </thead>
+
+
+                                    <tbody>
+                                        {% for l in laporan %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ l.id_user.first_name }} {{ l.id_user.last_name }}</td>
+                                            <td>{{ l.id_user.nik }}</td>
+                                            <td>{{ l.jenis_surat }}</td>
+                                            <td>{{ l.created_at }}</td>
+                                            <td>{% if l.is_active == 1 %} <span class="text-success">Sudah Selesai</span> {% elif l.is_active == 2 %} <span class="text-primary">Sedang Diajukan ke kepala desa</span> {% elif l.is_active == 3 %} <span class="text-danger">Pengajuan Ditolak</span> {% else %} <span class="text-info">Sedang Diajukan</span> {% endif %}</td>
+                                            <td><a href="/detail_pengajuan/{{ l.id_laporan }}" class="btn btn-info btn-sm">Detail</a> {% if l.is_active == 1 %} <a href="{% get_url_download l.jenis_surat l.id_laporan %}" class="btn btn-primary btn-sm">Download Surat</a> {% endif %}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div> <!-- end col -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block pagecontent %}
+<div class="bg-primary bg-pattern mb-5 pb-5">
+    <div class="account-pages pt-5">
+        <div class="account-pages">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="text-center mb-5">
+                            <a href="index.html" class="logo"><img src="{% static 'assets/images/logo-light.png' %}" height="24" alt="logo"></a>
+                            <h5 class="font-size-16 text-white-50 mb-4">Layanan Masyarakat</h5>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+
+                <div class="">
+                    <div class="">
+                        {% if messages %}
+                            {% for message in messages %}
+                            <div{% if message.tags != 'error' %} class="alert alert-{{ message.tags }}" {% else %} class="alert alert-danger" {% endif %}>{{ message }}</div>
+                            {% endfor %}
+                        {% endif %}
+                        <div class="card">
+                            <div class="card-body p-4">
+                                <div class="p-2">
+                                    <h5 class="mb-5 text-center">Pendaftaran Penduduk.</h5>
+                                    <form class="form-horizontal" action="{% url 'do_register' %}" method="POST">
+                                        {% csrf_token %}
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-sm">
+                                                        <div class="form-group mb-4">
+                                                            <label for="username">Nama Depan</label>
+                                                            <input type="text" name="first_name" class="form-control" id="username">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm">
+                                                        <div class="form-group mb-4">
+                                                            <label for="username">Nama Belakang</label>
+                                                            <input type="text" name="last_name" class="form-control" id="username">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mb-4">
+                                                    <label for="username">NIK</label>
+                                                    <input type="number" name="nik" class="form-control" id="username">
+                                                </div>
+                                                <div class="form-group mb-4">
+                                                    <label for="username">Jenis Kelamin</label>
+                                                    <select name="jenis_kelamin" class="form-control" id="">
+                                                        <option value="">Pilih Jenis Kelamin</option>
+                                                        <option value="Laki-Laki">Laki-Laki</option>
+                                                        <option value="Perempuan">Perempuan</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group mb-4">
+                                                    <label for="username">Tanggal Lahir</label>
+                                                    <input type="date" name="ttl" class="form-control" id="username">
+                                                </div>
+                                                <div class="form-group mb-4">
+                                                    <label for="username">Agama</label>
+                                                    <input type="text" name="agama" class="form-control" id="username">
+                                                </div>
+                                                <div class="form-group mb-4">
+                                                    <label for="username">Pekerjaan</label>
+                                                    <input type="text" name="pekerjaan" class="form-control" id="username">
+                                                </div>
+                                                <div class="form-group mb-4">
+                                                    <label for="username">Status</label>
+                                                    <select name="status" class="form-control" id="">
+                                                        <option value="">Pilih Status</option>
+                                                        <option value="Menikah">Menikah</option>
+                                                        <option value="Belum Menikah">Belum Menikah</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group mb-4">
+                                                    <label for="username">Kewarganegaraan</label>
+                                                    <select name="kewarganegaraan" class="form-control" id="">
+                                                        <option value="">Pilih Kewarganegaraan</option>
+                                                        <option value="WNI">WNI</option>
+                                                        <option value="WNA">WNA</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group mb-4">
+                                                    <label for="username">Alamat</label>
+                                                    <textarea name="alamat" class="form-control" id="" cols="30" rows="10"></textarea>
+                                                </div>
+                                                <div class="form-group mb-4">
+                                                    <label for="username">Username</label>
+                                                    <input type="text" name="username" class="form-control" id="username">
+                                                </div>
+                                                <div class="form-group mb-4">
+                                                    <label for="useremail">Email</label>
+                                                    <input type="email" name="email" class="form-control" id="useremail">        
+                                                </div>
+                                                <div class="form-group mb-4">
+                                                    <label for="useremail">No Hp</label>
+                                                    <input type="text" name="no_hp" class="form-control" id="useremail">        
+                                                </div>
+                                                <div class="form-group mb-4">
+                                                    <label for="userpassword">Password</label>
+                                                    <input type="password" name="password" class="form-control" id="userpassword">
+                                                </div>
+                                                <div class="mt-4">
+                                                    <button class="btn btn-success btn-block waves-effect waves-light" type="submit">Daftar</button>
+                                                </div>
+                                                <div class="mt-4 text-center">
+                                                    <a href="{% url 'logins' %}" class="text-muted"><i class="mdi mdi-account-circle mr-1"></i> Sudah Punya Akun?</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end row -->
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

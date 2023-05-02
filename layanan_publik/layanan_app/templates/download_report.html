@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report</title>
+    <link
+  href="{% static 'assets/css/bootstrap.min.css' %}"
+  rel="stylesheet"
+  type="text/css"
+/>
+<style>
+    body {
+        padding-left: 20px;
+        padding-right: 20px;
+        background-color: white;
+    }
+    h1 {
+        font-family: 'Times New Roman', Times, serif;
+        color: black;
+        font-weight: bold;
+    }
+
+    p {
+        font-family: 'Times New Roman', Times, serif;
+        color: black;
+        font-size: 18px;
+    }
+
+    .hr-custom {
+        width: 100%;
+        height: 4px;
+        background-color: black;
+    }
+
+    h4 {
+        font-family: 'Times New Roman', Times, serif;
+        color: black;
+        font-weight: bold;
+    }
+
+    h3 {
+        font-family: 'Times New Roman', Times, serif;
+        color: black;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+    <div class="mt-4">
+        <div class="d-flex">
+            <div>
+                <img src="{% static 'assets/images/surat_logo.png' %}" width="130" alt="">
+            </div>
+            <div class="align-self-center text-center w-100">
+                <h1>REPORT LAPORAN SURAT</h1>
+                <p>Tanggal: {{ date }}</p>
+            </div>
+        </div>
+        <div class="hr-custom mb-4 mt-4"></div>
+    </div>
+
+    <div class="informasi">
+        <div class="row">
+            <div class="col">
+                <div class="card border border-dark">
+                    <div class="card-body">
+                        <h4>Jumlah Laporan Disetujui</h4>
+                        <h3>{{ count_setuju }}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border border-dark">
+                    <div class="card-body">
+                        <h4>Jumlah Laporan Ditolak</h4>
+                        <h3>{{ count_tolak }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
+
+    <div class="tas">
+        <table class="table table-bordered">
+            <tr>
+                <th>No</th>
+                <th>Kode Surat</th>
+                <th>NIK</th>
+                <th>Nama Pengaju</th>
+                <th>Jenis Surat</th>
+                <th>Status</th>
+                <th>Tanggal</th>
+            </tr>
+
+            {% for l in data %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ l.kode_surat }}</td>
+                <td>{{ l.id_user.nik }}</td>
+                <td>{{ l.id_user.first_name }} {{ l.id_user.last_name }}</td>
+                <td>{{ l.jenis_surat }}</td>
+                <td>{% if l.is_active == 1 %} <span class="text-success">Sudah Selesai</span> {% elif l.is_active == 2 %} <span class="text-primary">Sedang Diajukan ke kepala desa</span> {% elif l.is_active == 3 %} <span class="text-danger">Pengajuan Ditolak</span> {% else %} <span class="text-info">Sedang Diajukan</span> {% endif %}</td>
+                <td>{{ l.created_at }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <script>
+        window.print();
+    </script>
+</body>
+</html>

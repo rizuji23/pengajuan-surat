@@ -1,0 +1,73 @@
+{% extends 'surat.html' %}
+{% load static %}
+
+{% block surat_content %}
+    <div class="isi-surat">
+        <p>&emsp;Yang bertanda tangan di bawah ini Kepala Desa Kabupaten Bandung Cileunyi, dengan ini menerangkan bahwa:</p>
+        <div class="d-flex">
+            <div>
+                <ul>
+                    <li>NIK</li>
+                    <li>Nama</li>
+                    <li>Jenis Kelamin</li>
+                    <li>Tempat/Tgl. Lahir</li>
+                    <li>Kewarganegaraan</li>
+                    <li>Alamat</li>
+                </ul>
+            </div>
+            <div>
+                <ul>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                </ul>
+            </div>
+
+            <div>
+                <ul>
+                    <li>{{ laporan.id_user.nik }}</li>
+                    <li>{{ laporan.id_user.first_name }} {{ laporan.id_user.last_name }}</li>
+                    <li>{{ laporan.id_user.jenis_kelamin }}</li>
+                    <li>{{ laporan.id_user.ttl }}</li>
+                    <li>{{ laporan.id_user.kewarganegaraan }}</li>
+                    <li>{{ laporan.id_user.alamat }}</li>
+                </ul>
+            </div>
+        </div>
+        <p>Sesuai dengan keterangan yang bersangkutan benar bahwa benar yang bersangkutan Keluarga Tidak Mampu. </p>
+        <p>Surat keterangan ini untuk persyaratan Bantuan Pendidikan atas Nama: </p>
+        <div class="d-flex">
+            <div>
+                <ul>
+                    <li>Nama Tanggungan</li>
+                    <li>Jumlah Tanggungan</li>
+                    <li>Hubungan Tanggungan</li>
+                    <li>Keterangan</li>
+                </ul>
+            </div>
+            <div>
+                <ul>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                    <li>:</li>
+                </ul>
+            </div>
+
+            <div>
+                <ul>
+                    <li>{{ data.nama_tanggungan }}</li>
+                    <li>{{ data.jml_tanggungan }}</li>
+                    <li>{{ data.hubungan_tanggungan }}</li>
+                    <li>{{ data.keterangan }}</li>
+                </ul>
+            </div>
+        </div>
+        <p>Demikianlah Surat Keterangan ini kami buat dengan sebenernya untuk dipergunakan sebagaimana mestinya.</p>
+    </div>
+
+    {% include '../include/surat/ttd.html' %}
+{% endblock %}

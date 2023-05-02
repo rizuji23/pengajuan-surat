@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Data Surat | Pelayanan & Pengajuan Surat Desa Cileunyi</title>
+    <link
+  href="{% static 'assets/css/bootstrap.min.css' %}"
+  rel="stylesheet"
+  type="text/css"
+/>
+    <style>
+        .box-verify {
+            display: flex;
+            justify-content: center;
+            margin-top: 100px;
+        }
+
+        .box-card {
+            max-width: 500px;
+        }
+
+        * {
+            color: black !important;
+        }
+
+        .content {
+            font-size: 16px;
+        }
+
+        .content ul {
+            list-style-type: none;
+
+        }
+    </style>
+</head>
+<body>
+    <div class="box-verify">
+        <div class="card box-card shadow rounded">
+            <div class="card-body">
+                <div class="text-center">
+                    <img src="{% static 'assets/images/surat_logo.png' %}" width="130" alt="">
+                </div>
+                <div class="text-center mt-4">
+                    <h3 class="font-weight-bold text-dark">Pemerintah Kabupaten Bandung Kecamatan Cileunyi <br> Desa Cileunyi Wetan</h3>
+                </div>
+
+                <hr>
+
+                <div class="content">
+                    <p><u><b>Menyatakan Bahwa:</b></u></p>
+                    <div class="d-flex">
+                        <div>
+                            <ul>
+                                <li>Nomor Surat</li>
+                                <li>Tanggal Surat</li>
+                                <li>Perihal</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul>
+                                <li>:</li>
+                                <li>:</li>
+                                <li>:</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul>
+                                <li><b>{{ data.kode_surat }}</b></li>
+                                <li><b>{{ data.created_at }}</b></li>
+                                <li><b>{{ data.jenis_surat }}</b></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <div class="content">
+                    <p><u><b>Ditandatangani Oleh:</b></u></p>
+                    <div class="d-flex">
+                        <div>
+                            <ul>
+                                <li>Nama</li>
+                                <li>Jabatan</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul>
+                                <li>:</li>
+                                <li>:</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul>
+                                <li><b>{{ data.id_kepala.first_name }} {{ data.id_kepala.last_name }}</b></li>
+                                <li><b>Kepala Desa</b></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <div class="alert alert-success mt-3">
+                    <h5 class="font-weight-medium">Adalah benar dan tercatat dalam database sistem informasi kami.</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

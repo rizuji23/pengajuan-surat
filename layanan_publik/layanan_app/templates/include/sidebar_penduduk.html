@@ -1,0 +1,25 @@
+{% load static %}
+<div class="topnav">
+    <div class="container-fluid">
+        <nav class="navbar navbar-light navbar-expand-lg topnav-menu">
+
+            <div class="collapse navbar-collapse" id="topnav-menu-content">
+                <ul class="navbar-nav">
+                    {% with url_name=request.resolver_match.url_name %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if url_name == 'index' %}active{% endif %}" href="{% url 'dashboard_penduduk_view' %}">
+                            <i class="mdi mdi-storefront mr-2"></i>Dashboard
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {% if url_name == 'index' %}active{% endif %}" href="{% url 'change_profile' %}">
+                            <i class="mdi mdi-account-edit-outline mr-2"></i>Ganti Profile
+                        </a>
+                    </li>
+                    {% endwith %}
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
