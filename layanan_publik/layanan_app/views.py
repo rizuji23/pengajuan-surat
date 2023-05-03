@@ -468,14 +468,27 @@ def get_detail_form(type_laporan, **kwargs):
 def download_report(request):
     if request.method == "POST":
         filter_laporan = request.POST['filter']
+        jenis_laporan = request.POST['jenis_surat']
 
         if filter_laporan == "0":
             hari_ini = datetime.datetime.now().date()
             laporan = Laporan.objects.filter(created_at__date=hari_ini)
             count_setuju = Laporan.objects.filter(
-                created_at__date=hari_ini, is_active=1).count()
+                created_at__date=hari_ini, is_active=1)
             count_tolak = Laporan.objects.filter(
-                created_at__date=hari_ini, is_active=3).count()
+                created_at__date=hari_ini, is_active=3)
+    
+            if jenis_laporan == "all":
+                laporan = laporan
+                count_setuju = count_setuju.count()
+                count_tolak = count_tolak.count()
+            else:
+                laporan = laporan.filter(jenis_surat=jenis_laporan)
+                count_setuju = count_setuju.filter(
+                    jenis_surat=jenis_laporan).count()
+                count_tolak = count_tolak.filter(
+                    jenis_surat=jenis_laporan).count()
+
             context = {
                 'data': laporan,
                 'date': hari_ini,
@@ -491,9 +504,21 @@ def download_report(request):
             laporan = Laporan.objects.filter(
                 created_at__range=(start_date, end_date))
             count_setuju = Laporan.objects.filter(
-                created_at__range=(start_date, end_date), is_active=1).count()
+                created_at__range=(start_date, end_date), is_active=1)
             count_tolak = Laporan.objects.filter(
-                created_at__range=(start_date, end_date), is_active=3).count()
+                created_at__range=(start_date, end_date), is_active=3)
+            
+            if jenis_laporan == "all":
+                laporan = laporan
+                count_setuju = count_setuju.count()
+                count_tolak = count_tolak.count()
+            else:
+                laporan = laporan.filter(jenis_surat=jenis_laporan)
+                count_setuju = count_setuju.filter(
+                    jenis_surat=jenis_laporan).count()
+                count_tolak = count_tolak.filter(
+                    jenis_surat=jenis_laporan).count()
+
             context = {
                 'data': laporan,
                 'date': "{} ~ {}".format(start_date, end_date),
@@ -1424,6 +1449,7 @@ def save_surat_kematian(request):
     else:
         return HttpResponseForbidden()
 
+
 @login_required
 def change_profile(request):
     get_detail = get_object_or_404(User, username=request.user)
@@ -1434,6 +1460,7 @@ def change_profile(request):
     }
 
     return render(request, "ganti_profile.html", context)
+
 
 @login_required
 def do_change_profile(request):

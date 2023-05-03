@@ -31,6 +31,25 @@
                         <div class="form-detail">
                             <form action="/download_report" method="POST">
                                 {% csrf_token %}
+
+                                <div class="form-group">
+                                    <label for="example-text-input" class="">Jenis Surat</label>
+                                    <select name="jenis_surat" class="form-control" id="type_surat">
+                                        <option value="">Pilih Jenis Surat</option>
+                                        <option value="all">Semua</option>
+                                        <option value="nikah">Nikah</option>
+                                        <option value="surat_kelahiran">Surat Kelahiran</option>
+                                        <option value="surat_pindah">Surat Pindah</option>
+                                        <option value="skck">SKCK</option>
+                                        <option value="sku">SKU</option>
+                                        <option value="sktm_kes">SKTM Kes</option>
+                                        <option value="sktm_pend">SKTM Pend</option>
+                                        <option value="domisili">Domisili</option>
+                                        <option value="beda_nama">Beda Nama</option>
+                                        <option value="surat_kematian">Surat Kematian</option>
+                                    </select>
+                                </div>
+
                                 <div class="form-group">
                                     <label for="">Filter</label>
                                     <select name="filter" class="form-control" id="filter_report">
