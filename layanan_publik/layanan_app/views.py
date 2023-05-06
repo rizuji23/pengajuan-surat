@@ -920,7 +920,6 @@ def save_nikah(request):
         akta_lahir = request.FILES['akta_lahir']
         ijazah = request.FILES['ijazah']
         foto_pas_1 = request.FILES['foto_pas_1']
-        foto_pas_2 = request.FILES['foto_pas_2']
         surat_belum_nikah = request.FILES['surat_belum_nikah']
         surat_persetujuan = request.FILES['surat_persetujuan']
         id_laporan = get_id()
@@ -938,7 +937,7 @@ def save_nikah(request):
             # save nikah
             id_nikah = get_id()
             nikah = Nikah(id_nikah=id_nikah, id_laporan_id=get_laporan.id, nik=nik,
-                          mempelai_pria=mempelai_pria, mempelai_wanita=mempelai_wanita, nama_wali=nama_wali, surat_rt_rw=surat_rt_rw, ktp=ktp, kk=kk, akta_lahir=akta_lahir, ijazah=ijazah, foto_pas_1=foto_pas_1, foto_pas_2=foto_pas_2, surat_belum_nikah=surat_belum_nikah, surat_persetujuan=surat_persetujuan)
+                          mempelai_pria=mempelai_pria, mempelai_wanita=mempelai_wanita, nama_wali=nama_wali, surat_rt_rw=surat_rt_rw, ktp=ktp, kk=kk, akta_lahir=akta_lahir, ijazah=ijazah, foto_pas_1=foto_pas_1, foto_pas_2=None, surat_belum_nikah=surat_belum_nikah, surat_persetujuan=surat_persetujuan)
             nikah.save()
 
             if request.user.role == 1:

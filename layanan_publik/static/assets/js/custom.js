@@ -69,16 +69,9 @@ $(document).ready(() => {
                 </div>
 
                 <div class="form-group">
-                    <label for="example-text-input" class="col col-form-label">Pas Foto 2×3 sebanyak 4 lembar (calon suami/istri)</label>
+                    <label for="example-text-input" class="col col-form-label">Pas Foto (calon suami/istri)</label>
                     <div class="col-md-10">
                         <input required name="foto_pas_1" type="file" class="form-control" id=""/>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="example-text-input" class="col col-form-label">Pas Foto 4×6 sebanyak 2 lembar (calon suami/istri)</label>
-                    <div class="col-md-10">
-                        <input required name="foto_pas_2" type="file" class="form-control" id=""/>
                     </div>
                 </div>
 
@@ -241,7 +234,7 @@ $(document).ready(() => {
                 </div>
 
                 <div class="form-group">
-                    <label for="example-text-input" class="col col-form-label">Pas Photo berwarna ukuran 4×6 (4 lembar)</label>
+                    <label for="example-text-input" class="col col-form-label">Pas Photo</label>
                     <div class="col-md-10">
                         <input required name="pas_foto" type="file" class="form-control" id=""/>
                     </div>
@@ -292,7 +285,7 @@ $(document).ready(() => {
 
                 <div class="form-group">
                     <label for="example-text-input" class="col col-form-label">
-                    Pas foto 4x6 berlatar/background merah sebanyak 6 lembar</label>
+                    Pas foto 4x6 berlatar/background merah</label>
                     <div class="col-md-10">
                         <input required name="pas_foto" type="file" class="form-control" id=""/>
                     </div>
@@ -355,7 +348,7 @@ $(document).ready(() => {
                 </div>
 
                 <div class="form-group">
-                    <label for="example-text-input" class="col col-form-label">Pas Photo berwarna ukuran 4×6 (4 lembar)</label>
+                    <label for="example-text-input" class="col col-form-label">Pas Photo</label>
                     <div class="col-md-10">
                         <input required name="pas_foto" type="file" class="form-control" id=""/>
                     </div>
@@ -502,7 +495,7 @@ $(document).ready(() => {
                 </div>
 
                 <div class="form-group">
-                    <label for="example-text-input" class="col col-form-label">Pas foto 3 – 5 lembar ukuran 3×4</label>
+                    <label for="example-text-input" class="col col-form-label">Pas Photo</label>
                     <div class="col-md-10">
                         <input required name="pas_foto" type="file" class="form-control" id=""/>
                     </div>
@@ -563,13 +556,6 @@ $(document).ready(() => {
                         <input required name="dokumen_pembeda" type="file" class="form-control" id=""/>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label for="example-text-input" class="col col-form-label">Surat Pernyataan Beda Nama (bermaterai)</label>
-                    <div class="col-md-10">
-                        <input required name="surat_pernyataan" type="file" class="form-control" id=""/>
-                    </div>
-                </div>
                 `;
                 break;
 
@@ -612,13 +598,6 @@ $(document).ready(() => {
 
                 <h4 class="header-title">Persyaratan</h4>
                 <hr>
-
-                <div class="form-group">
-                    <label for="example-text-input" class="col col-form-label">Surat Keterangan Kematian Asli</label>
-                    <div class="col-md-10">
-                        <input required name="surat_keterangan" type="file" class="form-control" id=""/>
-                    </div>
-                </div>
 
                 <div class="form-group">
                     <label for="example-text-input" class="col col-form-label">KTP dan KK asli almarhum</label>
