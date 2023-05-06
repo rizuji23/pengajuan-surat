@@ -149,6 +149,9 @@ def download_pdf(template, context, laporan):
         "enable-local-file-access": ""
     }
 
+    laporan.count_download = (laporan.count_download if laporan.count_download != None else 0) + 1
+    laporan.save()
+
     template = get_template(template)
 
     html = template.render(context)
@@ -477,7 +480,7 @@ def download_report(request):
                 created_at__date=hari_ini, is_active=1)
             count_tolak = Laporan.objects.filter(
                 created_at__date=hari_ini, is_active=3)
-    
+
             if jenis_laporan == "all":
                 laporan = laporan
                 count_setuju = count_setuju.count()
@@ -507,7 +510,7 @@ def download_report(request):
                 created_at__range=(start_date, end_date), is_active=1)
             count_tolak = Laporan.objects.filter(
                 created_at__range=(start_date, end_date), is_active=3)
-            
+
             if jenis_laporan == "all":
                 laporan = laporan
                 count_setuju = count_setuju.count()

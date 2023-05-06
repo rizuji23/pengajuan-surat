@@ -51,12 +51,14 @@ class Laporan(models.Model):
         User, on_delete=models.DO_NOTHING, null=True, related_name="id_kepala_id")
     id_petugas = models.ForeignKey(
         User, on_delete=models.DO_NOTHING, null=True, related_name="id_petugas_id")
+    count_download = models.IntegerField(null=True, default=0)
 
     def __str__(self):
         return self.jenis_surat + ' (' + self.id_user.first_name + ' ' + self.id_user.last_name + ')'
 
     def get_nik(self):
         return self.id_user.nik
+
 
 class Change_Password(models.Model):
     id = models.AutoField(primary_key=True)
@@ -69,6 +71,7 @@ class Change_Password(models.Model):
 
     def __str__(self):
         return self.email
+
 
 class Nikah(models.Model):
     id = models.AutoField(primary_key=True)
