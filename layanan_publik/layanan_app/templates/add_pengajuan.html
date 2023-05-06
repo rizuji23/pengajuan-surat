@@ -4,7 +4,13 @@
 {% block pagecontent %}
 <div id="layout-wrapper">
     {% include 'include/navbar.html' %}
+    {% if data.role == 1 %}
     {% include 'include/sidebar_penduduk.html' %}
+    {% elif data.role == 2 %}
+    {% include 'include/sidebar_petugas.html' %}
+    {% elif data.role == 3 %}
+    {% include 'include/sidebar_kepala.html' %}
+    {% endif %}
 
     <div class="main-content">
         <div class="page-content">
@@ -14,7 +20,7 @@
                     <div class="col-12">
                         <div class="d-flex">
                             <div class="mr-3">
-                                <a href="{% url 'dashboard_penduduk_view' %}" class="btn btn-primary btn-sm">< Kembali</a>
+                                <a href="{% if data.role == 1 %} {% url 'dashboard_penduduk_view' %} {% elif data.role == 2 %} {% url 'dashboard_petugas_view' %} {% elif data.role == 3 %} {% url 'dashboard_kepala' %} {% endif %}" class="btn btn-primary btn-sm">< Kembali</a>
                             </div>
                             <div class="align-self-center">
                                 <h4 class="mb-0 font-size-18">Tambah Pengajuan</h4>
