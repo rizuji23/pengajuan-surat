@@ -674,7 +674,7 @@ def do_add_user(request):
         if form.is_valid():
             try:
                 form.instance.role = 1
-                form.instance.password = make_password(form.nik)
+                form.instance.password = make_password(str(form.instance.nik))
                 form.save()
             except Exception as e:
                 messages.add_message(request, messages.ERROR,
